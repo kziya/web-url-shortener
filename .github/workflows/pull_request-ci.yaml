@@ -16,7 +16,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 18.16.x
+          node-version: 18.18.x
           cache: yarn
 
       - name: Install Deps
@@ -31,7 +31,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 18.16.x
+          node-version: 18.18.x
           cache: yarn
 
       - name: Install Deps
@@ -56,7 +56,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 18.16.x
+          node-version: 18.18.x
           cache: yarn
 
       - name: Install Deps
@@ -80,7 +80,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 18.16.x
+          node-version: 18.18.x
           cache: yarn
 
       - name: Install Deps
