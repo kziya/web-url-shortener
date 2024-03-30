@@ -1,0 +1,102 @@
+name: Push to Main CI
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+jobs:
+  deps:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.16.x
+          cache: yarn
+
+      - name: Install Deps
+        run: yarn install --frozen-lockfile
+
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: "read"
+      actions: "read"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.16.x
+          cache: yarn
+
+      - name: Install Deps
+        run:  yarn install --frozen-lockfile
+
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v4
+
+      - name: Run Build
+        run: npx nx affected:build --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+
+
+
+  eslint:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: "read"
+      actions: "read"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.16.x
+          cache: yarn
+
+      - name: Install Deps
+        run: yarn install --frozen-lockfile
+
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v4
+
+      - name: Run Eslint
+        run: npx nx affected:lint --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+
+
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: "read"
+      actions: "read"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.16.x
+          cache: yarn
+
+      - name: Install Deps
+        run: yarn install --frozen-lockfile
+
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v4
+
+      - name: Run Test
+        run: npx nx affected:test --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
