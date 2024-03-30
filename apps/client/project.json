@@ -1,7 +1,7 @@
 {
-  "name": "web-url-shortener",
+  "name": "client",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/web-url-shortener/src",
+  "sourceRoot": "apps/client/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -10,18 +10,15 @@
       "defaultConfiguration": "production",
       "options": {
         "compiler": "babel",
-        "outputPath": "dist/apps/web-url-shortener",
-        "index": "apps/web-url-shortener/src/index.html",
+        "outputPath": "dist/apps/client",
+        "index": "apps/client/src/index.html",
         "baseHref": "/",
-        "main": "apps/web-url-shortener/src/main.tsx",
-        "tsConfig": "apps/web-url-shortener/tsconfig.app.json",
-        "assets": [
-          "apps/web-url-shortener/src/favicon.ico",
-          "apps/web-url-shortener/src/assets"
-        ],
-        "styles": ["apps/web-url-shortener/src/styles.scss"],
+        "main": "apps/client/src/main.tsx",
+        "tsConfig": "apps/client/tsconfig.app.json",
+        "assets": ["apps/client/src/favicon.ico", "apps/client/src/assets"],
+        "styles": ["apps/client/src/styles.scss"],
         "scripts": [],
-        "webpackConfig": "apps/web-url-shortener/webpack.config.js"
+        "webpackConfig": "apps/client/webpack.config.js"
       },
       "configurations": {
         "development": {
@@ -33,8 +30,8 @@
         "production": {
           "fileReplacements": [
             {
-              "replace": "apps/web-url-shortener/src/environments/environment.ts",
-              "with": "apps/web-url-shortener/src/environments/environment.prod.ts"
+              "replace": "apps/client/src/environments/environment.ts",
+              "with": "apps/client/src/environments/environment.prod.ts"
             }
           ],
           "optimization": true,
@@ -50,15 +47,15 @@
       "executor": "@nx/webpack:dev-server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "web-url-shortener:build",
+        "buildTarget": "client:build",
         "hmr": true
       },
       "configurations": {
         "development": {
-          "buildTarget": "web-url-shortener:build:development"
+          "buildTarget": "client:build:development"
         },
         "production": {
-          "buildTarget": "web-url-shortener:build:production",
+          "buildTarget": "client:build:production",
           "hmr": false
         }
       }
@@ -71,7 +68,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/web-url-shortener/jest.config.ts"
+        "jestConfig": "apps/client/jest.config.ts"
       }
     }
   },
