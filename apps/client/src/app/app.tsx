@@ -2,8 +2,8 @@
 import styles from './app.module.scss';
 import { AuthProvider } from './auth/AuthProvider';
 import { Route, Routes } from 'react-router-dom';
-import { AuthGuard } from './auth/AuthGuard';
-import { NotAuthGuard } from './auth/NotAuthGuard';
+import { AuthGuard } from './auth/guards/AuthGuard';
+import { NotAuthGuard } from './auth/guards/NotAuthGuard';
 
 export function App() {
   return (
