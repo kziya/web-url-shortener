@@ -3,8 +3,8 @@ import { IAuthData } from './AuthDataInterface';
 
 export interface IAuthContext {
   authData: IAuthData | null;
-  login: () => any;
-  logout: () => any;
+  login: () => void;
+  logout: () => void;
 }
 
 export const AuthContext = createContext<IAuthContext>({
