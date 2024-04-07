@@ -1,4 +1,3 @@
-import './app.module.scss';
 import { AuthProvider } from './auth/AuthProvider';
 import { AppRoutes } from './AppRoutes';
 
