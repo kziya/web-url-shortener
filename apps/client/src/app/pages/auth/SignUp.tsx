@@ -3,19 +3,19 @@ import { Link } from '@mui/joy';
 import { AuthNavbar } from './components/AuthNavbar';
 import { AuthFormInputs } from './components/AuthFormInputs';
 
-export function Login() {
+export function SignUp() {
   return (
     <>
       <AuthNavbar />
       <main>
         <div className="form">
           <div className="form-title">
-            <h1>Login and start sharing</h1>
+            <h1>Create your account</h1>
             <h4>
-              Don't have an account ? <Link href="/auth/sign-up">Sign up</Link>
+              Already have an account ? <Link href="/auth/login">Login</Link>
             </h4>
           </div>
-          <AuthFormInputs type="login" />
+          <AuthFormInputs type="sign-up" />
         </div>
       </main>
     </>

@@ -8,7 +8,7 @@ export const AuthGuard: React.FC<{ children: React.ReactNode }> = ({
   const { authData } = useAuth();
 
   if (!authData) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/auth/login" />;
   }
 
   return children;
