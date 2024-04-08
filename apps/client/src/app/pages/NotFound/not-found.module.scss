@@ -1,0 +1,17 @@
+.main {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .container {
+    margin-top: -20%;
+    display: flex;
+    flex-direction: column;
+
+    .linkPlace {
+      margin-top: 40px;
+      text-align: center;
+    }
+  }
+}
