@@ -1,7 +1,10 @@
 import './auth.scss';
 import { Link } from '@mui/joy';
 import { AuthNavbar } from './components/AuthNavbar';
-import { AuthFormInputs } from './components/AuthFormInputs';
+import {
+  AuthFormInputs,
+  AuthFormInputsType,
+} from './components/AuthFormInputs';
 
 export function Login() {
   return (
@@ -15,7 +18,7 @@ export function Login() {
               Don't have an account ? <Link href="/auth/sign-up">Sign up</Link>
             </h4>
           </div>
-          <AuthFormInputs type="login" />
+          <AuthFormInputs type={AuthFormInputsType.Login} />
         </div>
       </main>
     </>

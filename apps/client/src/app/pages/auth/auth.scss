@@ -17,6 +17,7 @@ main {
     height: 500px;
     display: flex;
     flex-direction: column;
+    max-width: 360px;
 
     .form-title {
       h1 {

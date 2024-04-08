@@ -1,24 +1,21 @@
 import './auth.scss';
-import { Link } from '@mui/joy';
 import { AuthNavbar } from './components/AuthNavbar';
 import {
   AuthFormInputs,
   AuthFormInputsType,
 } from './components/AuthFormInputs';
 
-export function SignUp() {
+export function ForgetPassword() {
   return (
     <>
       <AuthNavbar />
       <main>
         <div className="form">
           <div className="form-title">
-            <h1>Create your account</h1>
-            <h4>
-              Already have an account ? <Link href="/auth/login">Login</Link>
-            </h4>
+            <h1>Reset your password</h1>
+            <h4>Enter your email to request a password reset link</h4>
           </div>
-          <AuthFormInputs type={AuthFormInputsType.SignUp} />
+          <AuthFormInputs type={AuthFormInputsType.ForgetPassword} />
         </div>
       </main>
     </>
