@@ -1,3 +1,4 @@
+import styles from '../auth.module.scss';
 import { Button, TextField } from '@mui/material';
 import { Link } from '@mui/joy';
 import { useState } from 'react';
@@ -25,8 +26,8 @@ export function AuthFormInputs({
   const [password, setPassword] = useState('');
 
   return (
-    <div className="form-inputs">
-      <div className="text-inputs">
+    <div className={styles.formInputs}>
+      <div className={styles.textInputs}>
         <TextField
           id="email-input"
           label="Email"
@@ -48,11 +49,11 @@ export function AuthFormInputs({
         )}
       </div>
       {type === AuthFormInputsType.Login && (
-        <div className="forget-password">
+        <div className={styles.forgetPassword}>
           <Link href="/auth/forget-password">Forget your password ?</Link>
         </div>
       )}
-      <div className="submit-button">
+      <div className={styles.submitButton}>
         <Button
           variant="contained"
           onClick={() => {

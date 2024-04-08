@@ -1,4 +1,4 @@
-import './auth.scss';
+import styles from './auth.module.scss';
 import { Link } from '@mui/joy';
 import { AuthNavbar } from './components/AuthNavbar';
 import {
@@ -14,9 +14,9 @@ export function SignUp() {
   return (
     <>
       <AuthNavbar />
-      <main>
-        <form className="form">
-          <div className="form-title">
+      <main className={styles.main}>
+        <form className={styles.form}>
+          <div className={styles.formTitle}>
             <h1>Create your account</h1>
             <h4>
               Already have an account ? <Link href="/auth/login">Login</Link>
