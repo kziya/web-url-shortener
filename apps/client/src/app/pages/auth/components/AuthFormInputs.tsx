@@ -1,5 +1,6 @@
 import { Button, TextField } from '@mui/material';
 import { Link } from '@mui/joy';
+import { useState } from 'react';
 
 export enum AuthFormInputsType {
   Login = 'login',
@@ -13,7 +14,16 @@ const submitButtonTextMapper = {
   [AuthFormInputsType.ForgetPassword]: 'Reset',
 };
 
-export function AuthFormInputs({ type }: { type: AuthFormInputsType }) {
+export function AuthFormInputs({
+  type,
+  onFormSubmit,
+}: {
+  type: AuthFormInputsType;
+  onFormSubmit: (email: string, password: string) => void;
+}) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   return (
     <div className="form-inputs">
       <div className="text-inputs">
@@ -22,6 +32,8 @@ export function AuthFormInputs({ type }: { type: AuthFormInputsType }) {
           label="Email"
           variant="outlined"
           type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <br />
         {type !== AuthFormInputsType.ForgetPassword && (
@@ -30,6 +42,8 @@ export function AuthFormInputs({ type }: { type: AuthFormInputsType }) {
             label="Password"
             variant="outlined"
             type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         )}
       </div>
@@ -39,7 +53,14 @@ export function AuthFormInputs({ type }: { type: AuthFormInputsType }) {
         </div>
       )}
       <div className="submit-button">
-        <Button variant="contained">{submitButtonTextMapper[type]}</Button>
+        <Button
+          variant="contained"
+          onClick={() => {
+            onFormSubmit(email, password);
+          }}
+        >
+          {submitButtonTextMapper[type]}
+        </Button>
       </div>
     </div>
   );
