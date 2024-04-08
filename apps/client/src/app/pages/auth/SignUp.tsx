@@ -10,6 +10,7 @@ export function SignUp() {
   const onSignUpSubmit = (email: string, password: string) => {
     console.dir({ email, password });
   };
+  console.log('test');
 
   return (
     <>
