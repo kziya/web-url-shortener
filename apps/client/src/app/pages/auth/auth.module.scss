@@ -2,11 +2,11 @@ html {
   overflow: hidden;
 }
 
-nav {
+.nav {
   padding: 20px 60px;
 }
 
-main {
+.main {
   margin-top: -50px;
   height: 100%;
   display: flex;
@@ -19,7 +19,8 @@ main {
     flex-direction: column;
     max-width: 360px;
 
-    .form-title {
+    .formTitle {
+
       h1 {
         font-size: 32px;
         font-weight: bold;;
@@ -32,10 +33,10 @@ main {
       }
     }
 
-    .form-inputs {
+    .formInputs {
       margin-top: 20px;
 
-      .text-inputs {
+      .textInputs {
         display: flex;
         flex-direction: column;
 
@@ -44,12 +45,12 @@ main {
         }
       }
 
-      .forget-password {
+      .forgetPassword {
         margin-top: 5px;
         text-align: end;
       }
 
-      .submit-button {
+      .submitButton {
         margin-top: 15px;
 
         button {

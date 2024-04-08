@@ -1,4 +1,4 @@
-import './auth.scss';
+import styles from './auth.module.scss';
 import { AuthNavbar } from './components/AuthNavbar';
 import {
   AuthFormInputs,
@@ -13,9 +13,9 @@ export function ForgetPassword() {
   return (
     <>
       <AuthNavbar />
-      <main>
-        <div className="form">
-          <div className="form-title">
+      <main className={styles.main}>
+        <div className={styles.form}>
+          <div className={styles.formTitle}>
             <h1>Reset your password</h1>
             <h4>Enter your email to request a password reset link</h4>
           </div>
