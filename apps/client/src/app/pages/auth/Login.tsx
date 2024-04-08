@@ -7,6 +7,13 @@ import {
 } from './components/AuthFormInputs';
 
 export function Login() {
+  const onLoginSubmit = (email: string, password: string) => {
+    console.dir({
+      email,
+      password,
+    });
+  };
+
   return (
     <>
       <AuthNavbar />
@@ -18,7 +25,10 @@ export function Login() {
               Don't have an account ? <Link href="/auth/sign-up">Sign up</Link>
             </h4>
           </div>
-          <AuthFormInputs type={AuthFormInputsType.Login} />
+          <AuthFormInputs
+            type={AuthFormInputsType.Login}
+            onFormSubmit={onLoginSubmit}
+          />
         </div>
       </main>
     </>

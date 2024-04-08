@@ -7,19 +7,26 @@ import {
 } from './components/AuthFormInputs';
 
 export function SignUp() {
+  const onSignUpSubmit = (email: string, password: string) => {
+    console.dir({ email, password });
+  };
+
   return (
     <>
       <AuthNavbar />
       <main>
-        <div className="form">
+        <form className="form">
           <div className="form-title">
             <h1>Create your account</h1>
             <h4>
               Already have an account ? <Link href="/auth/login">Login</Link>
             </h4>
           </div>
-          <AuthFormInputs type={AuthFormInputsType.SignUp} />
-        </div>
+          <AuthFormInputs
+            type={AuthFormInputsType.SignUp}
+            onFormSubmit={onSignUpSubmit}
+          />
+        </form>
       </main>
     </>
   );
