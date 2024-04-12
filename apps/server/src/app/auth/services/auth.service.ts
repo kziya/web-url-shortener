@@ -11,16 +11,28 @@ import { UserDocument } from '../../user/user.schema';
 export class AuthService {
   constructor(
     private readonly authTokenService: AuthTokenService,
-    private readonly authValidator: AuthValidatorService,
+    private readonly authValidatorService: AuthValidatorService,
     private readonly authHashService: AuthHashService,
     private readonly userRepository: UserRepository
   ) {}
+
+  async login(
+    email: string,
+    password: string
+  ): Promise<SuccessfulAuthResponseDto> {
+    await this.authValidatorService.validateLogin(email, password);
+
+    const userDocument = await this.userRepository.getUserByEmail(email);
+    await this.authHashService.verifyHash(password, userDocument.password);
+
+    return this.generateSuccessfulAuthResponse(userDocument);
+  }
 
   async signUp(
     email: string,
     password: string
   ): Promise<SuccessfulAuthResponseDto> {
-    await this.authValidator.validateSignUp(email, password);
+    await this.authValidatorService.validateSignUp(email, password);
 
     const hashedPassword = await this.authHashService.hashPassword(password);
     const userDocument = await this.userRepository.createUser(

@@ -16,4 +16,13 @@ export class AuthController {
   ): Promise<SuccessfulAuthResponseDto> {
     return this.authService.signUp(email, password);
   }
+
+  @Public()
+  @Post('login')
+  async login(
+    @Body('email') email: string,
+    @Body('password') password: string
+  ): Promise<SuccessfulAuthResponseDto> {
+    return this.authService.login(email, password);
+  }
 }

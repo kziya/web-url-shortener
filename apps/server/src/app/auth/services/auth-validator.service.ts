@@ -9,6 +9,11 @@ import { UserAlreadyExistsException } from '../exceptions/user-already-exists.ex
 export class AuthValidatorService {
   constructor(private readonly userRepository: UserRepository) {}
 
+  async validateLogin(email: string, password: string): Promise<void> {
+    this.validateEmailAndPassword(email, password);
+    await this.validateUserExists(email);
+  }
+
   async validateSignUp(email: string, password: string): Promise<void> {
     this.validateEmailAndPassword(email, password);
     await this.validateUserNotExists(email);
