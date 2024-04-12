@@ -43,7 +43,14 @@ export class AuthService {
     return this.generateSuccessfulAuthResponse(userDocument);
   }
 
-  generateSuccessfulAuthResponse(
+  async refreshToken(refreshToken: string): Promise<SuccessfulAuthResponseDto> {
+    const tokenPayload = this.authTokenService.verifyRefreshToken(refreshToken);
+    const user = await this.userRepository.getUserById(tokenPayload.id);
+
+    return this.generateSuccessfulAuthResponse(user);
+  }
+
+  private generateSuccessfulAuthResponse(
     userDocument: UserDocument
   ): SuccessfulAuthResponseDto {
     const { password: unusefulPassword, ...userToReturn } =

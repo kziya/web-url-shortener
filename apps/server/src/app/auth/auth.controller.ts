@@ -25,4 +25,12 @@ export class AuthController {
   ): Promise<SuccessfulAuthResponseDto> {
     return this.authService.login(email, password);
   }
+
+  @Public()
+  @Post('refresh-token')
+  async refreshToken(
+    @Body('refreshToken') refreshToken: string
+  ): Promise<SuccessfulAuthResponseDto> {
+    return this.authService.refreshToken(refreshToken);
+  }
 }

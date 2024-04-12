@@ -10,6 +10,10 @@ export class UserRepository {
     @InjectModel(User.name) private readonly userModel: Model<User>
   ) {}
 
+  async getUserById(id: string): Promise<UserDocument> {
+    return this.userModel.findOne({ _id: id });
+  }
+
   async getUserByEmail(email: string): Promise<UserDocument> {
     return this.userModel.findOne({ email });
   }

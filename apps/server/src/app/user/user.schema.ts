@@ -3,6 +3,8 @@ import { HydratedDocument } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class User {
+  _id?: string;
+
   @Prop({ unique: true, required: true })
   email: string;
 

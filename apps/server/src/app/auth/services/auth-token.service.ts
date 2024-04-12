@@ -4,6 +4,7 @@ import { Injectable } from '@nestjs/common';
 
 import { UserDocument } from '../../user/user.schema';
 import { AuthTokenPayload } from '../auth.types';
+import { RefreshTokenExpiredException } from '../exceptions/refresh-token-expired.exception';
 
 @Injectable()
 export class AuthTokenService {
@@ -11,6 +12,17 @@ export class AuthTokenService {
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService
   ) {}
+
+  public verifyRefreshToken(refreshToken: string): AuthTokenPayload {
+    try {
+      return this.jwtService.verify<AuthTokenPayload>(refreshToken, {
+        secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
+      });
+    } catch (e) {
+      console.log(e);
+      throw new RefreshTokenExpiredException();
+    }
+  }
 
   public signTokens(user: UserDocument): {
     accessToken: string;
