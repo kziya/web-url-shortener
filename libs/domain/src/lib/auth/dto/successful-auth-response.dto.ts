@@ -1,4 +1,4 @@
-import { User } from '../../user/user.schema';
+import { User } from '../../user';
 
 export class SuccessfulAuthResponseDto {
   user: Omit<User, 'password'>;
