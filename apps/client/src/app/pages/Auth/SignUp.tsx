@@ -6,15 +6,18 @@ import {
   AuthFormInputsType,
 } from './components/AuthFormInputs';
 import { useAuth } from '../../auth/AuthContext';
+import { useState } from 'react';
+import { getAuthErrorText } from './error/ErrorMessageMapper';
 
 export function SignUp() {
   const { signUp } = useAuth();
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const onSignUpSubmit = async (email: string, password: string) => {
     try {
       await signUp(email, password);
     } catch (e: any) {
-      console.log(e);
+      setErrorMessage(getAuthErrorText(e?.response?.data?.message));
     }
   };
 
@@ -32,6 +35,7 @@ export function SignUp() {
           <AuthFormInputs
             type={AuthFormInputsType.SignUp}
             onFormSubmit={onSignUpSubmit}
+            errorMessage={errorMessage}
           />
         </form>
       </main>

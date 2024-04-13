@@ -1,5 +1,5 @@
 import styles from '../auth.module.scss';
-import { Button, TextField } from '@mui/material';
+import { Button, Alert, TextField } from '@mui/material';
 import { Link } from '@mui/joy';
 import { useState } from 'react';
 
@@ -18,15 +18,23 @@ const submitButtonTextMapper = {
 export function AuthFormInputs({
   type,
   onFormSubmit,
+  errorMessage,
 }: {
   type: AuthFormInputsType;
   onFormSubmit: (email: string, password: string) => void;
+  errorMessage?: string;
 }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   return (
     <div className={styles.formInputs}>
+      {errorMessage && (
+        <>
+          <Alert severity="error">{errorMessage}</Alert>
+          <br />{' '}
+        </>
+      )}
       <div className={styles.textInputs}>
         <TextField
           id="email-input"
