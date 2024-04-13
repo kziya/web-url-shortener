@@ -18,13 +18,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setAuthData(authData);
   };
 
+  const signUp = async (email: string, password: string) => {
+    const authData = await AuthHttpService.signUp(email, password);
+
+    AuthLocalstorageService.setAuthData(authData);
+    setAuthData(authData);
+  };
+
   const logout = () => {
     AuthLocalstorageService.clearAuthData();
     setAuthData(null);
   };
 
   return (
-    <AuthContext.Provider value={{ authData, login, logout }}>
+    <AuthContext.Provider value={{ authData, login, signUp, logout }}>
       {children}
     </AuthContext.Provider>
   );

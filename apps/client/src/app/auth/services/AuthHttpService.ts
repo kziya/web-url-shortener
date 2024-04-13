@@ -13,6 +13,21 @@ class AuthHttpService {
 
     return response.data;
   }
+
+  async signUp(
+    email: string,
+    password: string
+  ): Promise<SuccessfulAuthResponseDto> {
+    const response = await axiosInstance.post<SuccessfulAuthResponseDto>(
+      '/auth/sign-up',
+      {
+        email,
+        password,
+      }
+    );
+
+    return response.data;
+  }
 }
 
 export default new AuthHttpService();

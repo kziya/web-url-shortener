@@ -5,10 +5,17 @@ import {
   AuthFormInputs,
   AuthFormInputsType,
 } from './components/AuthFormInputs';
+import { useAuth } from '../../auth/AuthContext';
 
 export function SignUp() {
-  const onSignUpSubmit = (email: string, password: string) => {
-    console.dir({ email, password });
+  const { signUp } = useAuth();
+
+  const onSignUpSubmit = async (email: string, password: string) => {
+    try {
+      await signUp(email, password);
+    } catch (e: any) {
+      console.log(e);
+    }
   };
 
   return (
