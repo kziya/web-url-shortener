@@ -21,7 +21,8 @@
       "@web-url-shortener/domain": [
         "libs/domain/src/index.ts"
       ]
-    }
+    },
+    "strictPropertyInitialization": false
   },
   "exclude": [
     "node_modules",
