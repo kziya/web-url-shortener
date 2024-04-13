@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
 
+import {
+  SuccessfulAuthResponseDto,
+  UserDocument,
+} from '@web-url-shortener/domain';
 import { UserRepository } from '../../user/user.repository';
 import { AuthValidatorService } from './auth-validator.service';
-import { SuccessfulAuthResponseDto } from '../dto/successful-auth-response.dto';
 import { AuthTokenService } from './auth-token.service';
 import { AuthHashService } from './auth-hash.service';
-import { UserDocument } from '../../user/user.schema';
 
 @Injectable()
 export class AuthService {

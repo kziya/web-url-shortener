@@ -7,7 +7,11 @@ export const AuthGuard: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const { authData } = useAuth();
 
-  if (!authData) {
+  if (
+    !authData?.refreshToken ||
+    !authData.accessToken ||
+    !authData.refreshToken
+  ) {
     return <Navigate to="/auth/login" />;
   }
 

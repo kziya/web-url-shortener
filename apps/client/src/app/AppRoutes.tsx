@@ -5,6 +5,7 @@ import { Login } from './pages/Auth/Login';
 import { SignUp } from './pages/Auth/SignUp';
 import { ForgetPassword } from './pages/Auth/ForgetPassword';
 import { NotFound } from './pages/NotFound/NotFound';
+import { PrivateMain } from './pages/Private/PrivateMain';
 
 export function AppRoutes() {
   return (
@@ -40,7 +41,7 @@ export function AppRoutes() {
         path="/"
         element={
           <AuthGuard>
-            <h1>Main</h1>
+            <PrivateMain />
           </AuthGuard>
         }
       />

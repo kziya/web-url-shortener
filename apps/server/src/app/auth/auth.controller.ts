@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 
+import { SuccessfulAuthResponseDto } from '@web-url-shortener/domain';
 import { AuthService } from './services/auth.service';
-import { SuccessfulAuthResponseDto } from './dto/successful-auth-response.dto';
 import { Public } from './decorators/public.decorator';
 
 @Controller('auth')

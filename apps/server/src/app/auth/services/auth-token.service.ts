@@ -2,8 +2,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
 
-import { UserDocument } from '../../user/user.schema';
-import { AuthTokenPayload } from '../auth.types';
+import { AuthTokenPayload, UserDocument } from '@web-url-shortener/domain';
 import { RefreshTokenExpiredException } from '../exceptions/refresh-token-expired.exception';
 
 @Injectable()

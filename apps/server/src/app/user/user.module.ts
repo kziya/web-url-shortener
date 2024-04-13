@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from './user.schema';
+
+import { User, UserSchema } from '@web-url-shortener/domain';
 import { UserRepository } from './user.repository';
 
 @Module({
