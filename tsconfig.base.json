@@ -22,7 +22,8 @@
         "libs/domain/src/index.ts"
       ]
     },
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "strictNullChecks": false
   },
   "exclude": [
     "node_modules",

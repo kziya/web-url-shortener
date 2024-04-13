@@ -5,13 +5,17 @@ import {
   AuthFormInputs,
   AuthFormInputsType,
 } from './components/AuthFormInputs';
+import { useAuth } from '../../auth/AuthContext';
 
 export function Login() {
-  const onLoginSubmit = (email: string, password: string) => {
-    console.dir({
-      email,
-      password,
-    });
+  const { login } = useAuth();
+
+  const onLoginSubmit = async (email: string, password: string) => {
+    try {
+      await login(email, password);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
