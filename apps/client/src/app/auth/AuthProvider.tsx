@@ -8,7 +8,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [authData, setAuthData] = useState<IAuthData | null>(null);
 
   const login = () => {
-    setAuthData({ token: '' });
+    setAuthData(null);
   };
   const logout = () => {
     setAuthData(null);
