@@ -130,4 +130,4 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Run Test
-        run: npx nx affected:deploy:prod --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+        run: npx nx affected -t deploy:prod --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
