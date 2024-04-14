@@ -93,7 +93,7 @@
       "dependsOn": [
         "docker-build"
       ],
-      "command": "docker run -p 8080:8080 client "
+      "command": "docker run -p 8080:8080 kziya/web-url-shortener-client"
     },
     "deploy:prod": {
       "dependsOn": [
