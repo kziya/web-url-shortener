@@ -82,6 +82,18 @@
       "options": {
         "jestConfig": "apps/client/jest.config.ts"
       }
+    },
+    "docker-build": {
+      "dependsOn": [
+        "build"
+      ],
+      "command": "docker build -f apps/client/Dockerfile dist/apps/client -t client"
+    },
+    "docker-run": {
+      "dependsOn": [
+        "docker-build"
+      ],
+      "command": "docker run -p 8080:8080 client "
     }
   },
   "tags": []
