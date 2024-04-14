@@ -82,6 +82,24 @@
       "options": {
         "jestConfig": "apps/client/jest.config.ts"
       }
+    },
+    "docker-build": {
+      "dependsOn": [
+        "build"
+      ],
+      "command": "docker build -f apps/client/Dockerfile dist/apps/client -t kziya/web-url-shortener-client"
+    },
+    "docker-run": {
+      "dependsOn": [
+        "docker-build"
+      ],
+      "command": "docker run -p 8080:8080 kziya/web-url-shortener-client"
+    },
+    "deploy:prod": {
+      "dependsOn": [
+        "docker-build"
+      ],
+      "command": "docker push kziya/web-url-shortener-client"
     }
   },
   "tags": []
