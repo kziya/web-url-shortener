@@ -60,7 +60,7 @@
       "dependsOn": [
         "build"
       ],
-      "command": "docker build -f apps/client/Dockerfile dist/apps/server -t kziya/web-url-shortener-server"
+      "command": "docker build -f apps/server/Dockerfile dist/apps/server -t kziya/web-url-shortener-server"
     },
     "docker-run": {
       "dependsOn": [
