@@ -55,8 +55,7 @@ export class AuthService {
   private generateSuccessfulAuthResponse(
     userDocument: UserDocument
   ): SuccessfulAuthResponseDto {
-    const { password: unusefulPassword, ...userToReturn } =
-      userDocument.toObject();
+    const { password, ...userToReturn } = userDocument.toObject();
 
     const { accessToken, refreshToken } =
       this.authTokenService.signTokens(userDocument);
