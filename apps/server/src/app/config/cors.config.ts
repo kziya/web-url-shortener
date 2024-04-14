@@ -13,4 +13,9 @@ export const CorsConfig: CorsOptions = {
     'PUT',
     'GET',
   ],
+  allowedHeaders: [
+    'Access-Control-Allow-Headers',
+    'Content-Type',
+    'Authorization',
+  ],
 };
