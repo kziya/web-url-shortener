@@ -129,5 +129,5 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Run Test
+      - name: Run deploy prod
         run: npx nx affected -t deploy:prod --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
