@@ -4,7 +4,7 @@ import { UserRepository } from '../../user/user.repository';
 import { EmailOrPasswordNotValidException } from '../exceptions/email-or-password-not-valid.exception';
 import { UserNotExistsException } from '../exceptions/user-not-exists.exception';
 import { UserAlreadyExistsException } from '../exceptions/user-already-exists.exception';
-import { VerifyUidNotExistsOrExpiredException } from '../exceptions/verify-uid-not-exists.exception';
+import { VerifyUidNotValidOrExpiredException } from '../exceptions/verify-uid-not-valid-or-expired.exception';
 
 @Injectable()
 export class AuthValidatorService {
@@ -22,7 +22,7 @@ export class AuthValidatorService {
 
   async validateVerify(email: string): Promise<void> {
     if (!email) {
-      throw new VerifyUidNotExistsOrExpiredException();
+      throw new VerifyUidNotValidOrExpiredException();
     }
 
     await this.validateUserExists(email);
