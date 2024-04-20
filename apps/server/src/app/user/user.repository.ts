@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, UpdateWriteOpResult } from 'mongoose';
 
 import { User, UserDocument } from '@web-url-shortener/domain';
 
@@ -29,5 +29,9 @@ export class UserRepository {
     hashedPassword: string
   ): Promise<UserDocument> {
     return this.userModel.create({ email, password: hashedPassword });
+  }
+
+  async verifyUser(email: string): Promise<UpdateWriteOpResult> {
+    return this.userModel.updateOne({ email }, { $set: { isVerified: true } });
   }
 }

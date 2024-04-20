@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 
 import { SuccessfulAuthResponseDto } from '@web-url-shortener/domain';
 import { AuthService } from './services/auth.service';
@@ -32,5 +32,11 @@ export class AuthController {
     @Body('refreshToken') refreshToken: string
   ): Promise<SuccessfulAuthResponseDto> {
     return this.authService.refreshToken(refreshToken);
+  }
+
+  @Public()
+  @Get('verify/:uid')
+  async verifyUser(@Param('uid') uid: string): Promise<void> {
+    await this.authService.verifyUser(uid);
   }
 }

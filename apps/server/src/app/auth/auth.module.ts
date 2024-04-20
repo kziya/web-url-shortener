@@ -13,6 +13,7 @@ import { AuthValidatorService } from './services/auth-validator.service';
 import { AuthController } from './auth.controller';
 import { AuthHashService } from './services/auth-hash.service';
 import { AuthTokenService } from './services/auth-token.service';
+import { AuthRedisService } from './services/auth-redis.service';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { AuthTokenService } from './services/auth-token.service';
     AuthValidatorService,
     AuthHashService,
     AuthTokenService,
+    AuthRedisService,
     JwtStrategy,
     {
       provide: APP_GUARD,
