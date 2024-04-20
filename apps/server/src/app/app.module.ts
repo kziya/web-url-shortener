@@ -14,7 +14,6 @@ import { RedisModuleConfig } from './config/module/redis-module.config';
     ConfigModule.forRoot(ConfigModuleConfig),
     MongooseModule.forRootAsync(MongooseModuleConfig),
     RedisModule.forRootAsync(RedisModuleConfig),
-    RedisModule,
     AuthModule,
     UserModule,
   ],
