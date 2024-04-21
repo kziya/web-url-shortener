@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
+  ResetPasswordByUidBodyDto,
   SuccessfulAuthResponseDto,
   UserDocument,
 } from '@web-url-shortener/domain';
@@ -72,6 +73,32 @@ export class AuthService {
     const uid = uuidv4();
     await this.authRedisService.setVerifyUser(uid, user.email);
     await this.authMailerService.sendVerifyUserEmail(uid, user.email);
+  }
+
+  async sendResetPasswordEmail(email: string): Promise<void> {
+    await this.authValidatorService.validateSendResetPasswordEmail(email);
+
+    const uid = uuidv4();
+    await this.authRedisService.setResetPassword(uid, email);
+    await this.authMailerService.sendResetPasswordEmail(uid, email);
+  }
+
+  async resetPasswordByUid(
+    uid: string,
+    resetPasswordByUidBodyDto: ResetPasswordByUidBodyDto
+  ) {
+    const email = await this.authRedisService.getResetPassword(uid);
+    const { password, confirmPassword } = resetPasswordByUidBodyDto;
+
+    await this.authValidatorService.validateResetPasswordByUid(
+      email,
+      password,
+      confirmPassword
+    );
+
+    const hashedPassword = await this.authHashService.hashPassword(password);
+
+    await this.userRepository.updatePassword(email, hashedPassword);
   }
 
   private generateSuccessfulAuthResponse(
