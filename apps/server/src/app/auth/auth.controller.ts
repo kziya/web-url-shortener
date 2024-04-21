@@ -4,6 +4,7 @@ import {
   AuthTokenPayload,
   SuccessfulAuthResponseDto,
   ResetPasswordByUidBodyDto,
+  GetVerifyStatusResponseDto,
 } from '@web-url-shortener/domain';
 import { AuthService } from './services/auth.service';
 import { Public } from './decorators/public.decorator';
@@ -37,6 +38,13 @@ export class AuthController {
     @Body('refreshToken') refreshToken: string
   ): Promise<SuccessfulAuthResponseDto> {
     return this.authService.refreshToken(refreshToken);
+  }
+
+  @Get('verify/status')
+  async getVerifyStatus(
+    @GetTokenPayload() tokenPayload: AuthTokenPayload
+  ): Promise<GetVerifyStatusResponseDto> {
+    return this.authService.getVerifyStatus(tokenPayload.id);
   }
 
   @Public()

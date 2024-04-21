@@ -1,9 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import {
-  ResetPasswordByUidBodyDto,
-  UserDocument,
-} from '@web-url-shortener/domain';
+import { UserDocument } from '@web-url-shortener/domain';
 import { UserRepository } from '../../user/user.repository';
 import { EmailOrPasswordNotValidException } from '../exceptions/email-or-password-not-valid.exception';
 import { UserNotExistsException } from '../exceptions/user-not-exists.exception';
@@ -25,6 +22,12 @@ export class AuthValidatorService {
   async validateSignUp(email: string, password: string): Promise<void> {
     this.validateEmailAndPassword(email, password);
     await this.validateUserNotExists(email);
+  }
+
+  async validateGetVerifyStatus(user: UserDocument): Promise<void> {
+    if (!user) {
+      throw new UserNotExistsException();
+    }
   }
 
   async validateVerify(email: string): Promise<void> {
