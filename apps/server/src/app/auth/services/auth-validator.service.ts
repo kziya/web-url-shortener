@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 
+import { UserDocument } from '@web-url-shortener/domain';
 import { UserRepository } from '../../user/user.repository';
 import { EmailOrPasswordNotValidException } from '../exceptions/email-or-password-not-valid.exception';
 import { UserNotExistsException } from '../exceptions/user-not-exists.exception';
 import { UserAlreadyExistsException } from '../exceptions/user-already-exists.exception';
 import { VerifyUidNotValidOrExpiredException } from '../exceptions/verify-uid-not-valid-or-expired.exception';
-import { UserDocument } from '@web-url-shortener/domain';
 import { UserAlreadyVerifiedException } from '../exceptions/user-already-verified.exception';
 
 @Injectable()
