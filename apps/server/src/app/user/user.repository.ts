@@ -34,4 +34,11 @@ export class UserRepository {
   async verifyUser(email: string): Promise<UpdateWriteOpResult> {
     return this.userModel.updateOne({ email }, { $set: { isVerified: true } });
   }
+
+  async updatePassword(
+    email: string,
+    passwordHash: string
+  ): Promise<UpdateWriteOpResult> {
+    return this.userModel.updateOne({ email, password: passwordHash });
+  }
 }

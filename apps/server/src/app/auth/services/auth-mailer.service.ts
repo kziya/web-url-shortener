@@ -19,4 +19,14 @@ export class AuthMailerService {
       )}/auth/verify/${uid}">Click here to verify email</a>`,
     });
   }
+
+  async sendResetPasswordEmail(uid: string, email: string): Promise<void> {
+    return this.mailerService.sendMail({
+      to: email,
+      subject: 'Reset password',
+      html: `<a href="${this.configService.get(
+        'APP_DOMAIN'
+      )}/auth/reset-password/${uid}">Click here to reset password</a>`,
+    });
+  }
 }

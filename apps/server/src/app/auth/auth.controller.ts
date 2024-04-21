@@ -3,6 +3,7 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import {
   AuthTokenPayload,
   SuccessfulAuthResponseDto,
+  ResetPasswordByUidBodyDto,
 } from '@web-url-shortener/domain';
 import { AuthService } from './services/auth.service';
 import { Public } from './decorators/public.decorator';
@@ -49,5 +50,20 @@ export class AuthController {
     @GetTokenPayload() tokenPayload: AuthTokenPayload
   ): Promise<void> {
     await this.authService.sendVerifyEmail(tokenPayload.id);
+  }
+
+  @Public()
+  @Post('reset-password/send')
+  async sendResetPasswordEmail(@Body('email') email: string): Promise<void> {
+    await this.authService.sendResetPasswordEmail(email);
+  }
+
+  @Public()
+  @Post('reset-password/:uid')
+  async resetPasswordByUid(
+    @Param('uid') uid: string,
+    @Body() resetPasswordBodyDto: ResetPasswordByUidBodyDto
+  ): Promise<void> {
+    await this.authService.resetPasswordByUid(uid, resetPasswordBodyDto);
   }
 }
