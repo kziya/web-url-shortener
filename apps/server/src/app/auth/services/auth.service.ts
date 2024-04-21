@@ -71,7 +71,7 @@ export class AuthService {
 
     const uid = uuidv4();
     await this.authRedisService.setVerifyUser(uid, user.email);
-    await this.authMailerService.sendVerifyEmail(uid, user.email);
+    await this.authMailerService.sendVerifyUserEmail(uid, user.email);
   }
 
   private generateSuccessfulAuthResponse(

@@ -9,7 +9,7 @@ export class AuthMailerService {
     private readonly configService: ConfigService
   ) {}
 
-  async sendVerifyEmail(uid: string, email: string): Promise<void> {
+  async sendVerifyUserEmail(uid: string, email: string): Promise<void> {
     // TODO: Finish send email logic
     return this.mailerService.sendMail({
       to: email,
