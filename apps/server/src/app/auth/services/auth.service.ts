@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
+  GetVerifyStatusResponseDto,
   ResetPasswordByUidBodyDto,
   SuccessfulAuthResponseDto,
   UserDocument,
@@ -56,6 +57,13 @@ export class AuthService {
     const user = await this.userRepository.getUserById(tokenPayload.id);
 
     return this.generateSuccessfulAuthResponse(user);
+  }
+
+  async getVerifyStatus(id: string): Promise<GetVerifyStatusResponseDto> {
+    const user = await this.userRepository.getUserById(id);
+    await this.authValidatorService.validateGetVerifyStatus(user);
+
+    return { status: user.isVerified };
   }
 
   async verifyUser(uid: string): Promise<void> {
