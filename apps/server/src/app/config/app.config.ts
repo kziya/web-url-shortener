@@ -4,7 +4,10 @@ const error = (name: string) => {
   throw new Error(`Environment variable ${name} is not defined`);
 };
 export default () => ({
-  APP_PORT: process.env.APP_PORT || 3000,
+  APP_DOMAIN: process.env.APP_DOMAIN || 'http://localhost:4200',
+
+  API_PORT: process.env.API_PORT || 3000,
+  API_DOMAIN: process.env.API_DOMAIN || 'http://localhost:3000',
 
   MONGODB_CONNECTION_URI:
     process.env.MONGODB_CONNECTION_URI || error('MONGODB_CONNECTION_URI'),

@@ -10,7 +10,7 @@ async function bootstrap() {
 
   app.setGlobalPrefix(globalPrefix);
   app.enableCors(CorsConfig);
-  const port = process.env.APP_PORT || 3000;
+  const port = process.env.API_PORT || 3000;
 
   await app.listen(port, '0.0.0.0');
   Logger.log(

@@ -1,8 +1,12 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 
-import { SuccessfulAuthResponseDto } from '@web-url-shortener/domain';
+import {
+  AuthTokenPayload,
+  SuccessfulAuthResponseDto,
+} from '@web-url-shortener/domain';
 import { AuthService } from './services/auth.service';
 import { Public } from './decorators/public.decorator';
+import { GetTokenPayload } from './decorators/get-token-payload.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -32,5 +36,18 @@ export class AuthController {
     @Body('refreshToken') refreshToken: string
   ): Promise<SuccessfulAuthResponseDto> {
     return this.authService.refreshToken(refreshToken);
+  }
+
+  @Public()
+  @Get('verify/:uid')
+  async verifyUser(@Param('uid') uid: string): Promise<void> {
+    await this.authService.verifyUser(uid);
+  }
+
+  @Post('verify/send')
+  async sendVerifyEmail(
+    @GetTokenPayload() tokenPayload: AuthTokenPayload
+  ): Promise<void> {
+    await this.authService.sendVerifyEmail(tokenPayload.id);
   }
 }

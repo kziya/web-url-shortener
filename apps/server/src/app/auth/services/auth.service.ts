@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   SuccessfulAuthResponseDto,
@@ -8,6 +9,8 @@ import { UserRepository } from '../../user/user.repository';
 import { AuthValidatorService } from './auth-validator.service';
 import { AuthTokenService } from './auth-token.service';
 import { AuthHashService } from './auth-hash.service';
+import { AuthRedisService } from './auth-redis.service';
+import { AuthMailerService } from './auth-mailer.service';
 
 @Injectable()
 export class AuthService {
@@ -15,6 +18,8 @@ export class AuthService {
     private readonly authTokenService: AuthTokenService,
     private readonly authValidatorService: AuthValidatorService,
     private readonly authHashService: AuthHashService,
+    private readonly authRedisService: AuthRedisService,
+    private readonly authMailerService: AuthMailerService,
     private readonly userRepository: UserRepository
   ) {}
 
@@ -50,6 +55,23 @@ export class AuthService {
     const user = await this.userRepository.getUserById(tokenPayload.id);
 
     return this.generateSuccessfulAuthResponse(user);
+  }
+
+  async verifyUser(uid: string): Promise<void> {
+    const emailToVerify = await this.authRedisService.getVerifyUser(uid);
+
+    await this.authValidatorService.validateVerify(emailToVerify);
+    await this.userRepository.verifyUser(emailToVerify);
+  }
+
+  async sendVerifyEmail(id: string): Promise<void> {
+    const user = await this.userRepository.getUserById(id);
+
+    await this.authValidatorService.validateSendVerifyEmail(user);
+
+    const uid = uuidv4();
+    await this.authRedisService.setVerifyUser(uid, user.email);
+    await this.authMailerService.sendVerifyEmail(uid, user.email);
   }
 
   private generateSuccessfulAuthResponse(
