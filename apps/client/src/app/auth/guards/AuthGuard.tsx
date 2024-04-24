@@ -17,5 +17,9 @@ export const AuthGuard: React.FC<{
     return <Navigate to="/auth/verify" />;
   }
 
+  if (onlyNotVerified && authData?.user?.isVerified) {
+    return <Navigate to="/" />;
+  }
+
   return children;
 };
