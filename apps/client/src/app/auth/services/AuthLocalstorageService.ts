@@ -25,6 +25,10 @@ class AuthLocalstorageService {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
     localStorage.removeItem(USER_KEY);
   }
+
+  getAccessToken(): string {
+    return localStorage.getItem(ACCESS_TOKEN_KEY);
+  }
 }
 
 export default new AuthLocalstorageService();
