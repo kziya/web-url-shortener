@@ -6,6 +6,7 @@ import { SignUp } from './pages/Auth/SignUp';
 import { ForgetPassword } from './pages/Auth/ForgetPassword';
 import { NotFound } from './pages/NotFound/NotFound';
 import { PrivateMain } from './pages/Private/PrivateMain';
+import { Verify } from './pages/Auth/Verify';
 
 export function AppRoutes() {
   return (
@@ -42,6 +43,15 @@ export function AppRoutes() {
         element={
           <AuthGuard>
             <PrivateMain />
+          </AuthGuard>
+        }
+      />
+
+      <Route
+        path="/auth/verify"
+        element={
+          <AuthGuard onlyNotVerified={true}>
+            <Verify />
           </AuthGuard>
         }
       />
