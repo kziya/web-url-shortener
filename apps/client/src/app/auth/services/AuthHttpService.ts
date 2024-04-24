@@ -28,6 +28,10 @@ class AuthHttpService {
 
     return response.data;
   }
+
+  async sendVerifyMail(): Promise<SuccessfulAuthResponseDto> {
+    return axiosInstance.post('/auth/verify/send');
+  }
 }
 
 export default new AuthHttpService();
