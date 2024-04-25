@@ -40,8 +40,10 @@ export function Verify() {
                   AuthHttpService.sendVerifyMail()
                     .then((result) => {
                       setIsVerifyMailSent(true);
+                      setError(false);
                     })
                     .catch((error) => {
+                      setIsVerifyMailSent(false);
                       setError(true);
                     });
                 }}

@@ -17,6 +17,15 @@ class AuthService {
     return authData;
   }
 
+  async verifyByUid(uid: string): Promise<void> {
+    await AuthHttpService.verifyByUid(uid);
+    const user = AuthLocalstorageService.getUser();
+
+    user.isVerified = true;
+
+    AuthLocalstorageService.setUser(user);
+  }
+
   logout(): void {
     AuthLocalstorageService.clearAuthData();
   }

@@ -32,6 +32,10 @@ class AuthHttpService {
   async sendVerifyMail(): Promise<SuccessfulAuthResponseDto> {
     return axiosInstance.post('/auth/verify/send');
   }
+
+  async verifyByUid(uid: string): Promise<void> {
+    return axiosInstance.post(`/auth/verify/${uid}`);
+  }
 }
 
 export default new AuthHttpService();
