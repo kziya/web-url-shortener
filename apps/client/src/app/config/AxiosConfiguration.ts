@@ -18,24 +18,24 @@ axiosInstance.interceptors.request.use((config) => {
 });
 
 axiosInstance.interceptors.response.use(
-  (response) => {
-    return response;
+  (axiosResponse) => {
+    return axiosResponse;
   },
-  async (errorResponse) => {
-    if (errorResponse.response.status === 401) {
-      const isRetried = errorResponse.config.isRetried;
+  async (axiosErrorResponse) => {
+    if (axiosErrorResponse.response.status === 401) {
+      const isRetried = axiosErrorResponse.config.isRetried;
 
       if (isRetried) {
         return AuthService.logout();
       }
 
-      errorResponse.config.isRetried = true;
+      axiosErrorResponse.config.isRetried = true;
 
       await AuthService.refreshToken();
 
-      return axiosInstance.request(errorResponse.config);
+      return axiosInstance.request(axiosErrorResponse.config);
     }
-    return errorResponse;
+    return axiosErrorResponse;
   }
 );
 
