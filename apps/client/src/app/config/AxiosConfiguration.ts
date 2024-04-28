@@ -35,7 +35,8 @@ axiosInstance.interceptors.response.use(
 
       return axiosInstance.request(axiosErrorResponse.config);
     }
-    return axiosErrorResponse;
+
+    throw axiosErrorResponse;
   }
 );
 
