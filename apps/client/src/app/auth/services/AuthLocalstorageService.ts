@@ -16,7 +16,7 @@ class AuthLocalstorageService {
     return {
       refreshToken: localStorage.getItem(REFRESH_TOKEN_KEY),
       accessToken: localStorage.getItem(ACCESS_TOKEN_KEY),
-      user: JSON.parse(localStorage.getItem(USER_KEY) ?? 'null'),
+      user: this.getUser(),
     };
   }
 
@@ -24,6 +24,22 @@ class AuthLocalstorageService {
     localStorage.removeItem(REFRESH_TOKEN_KEY);
     localStorage.removeItem(ACCESS_TOKEN_KEY);
     localStorage.removeItem(USER_KEY);
+  }
+
+  getUser(): IAuthData['user'] {
+    return JSON.parse(localStorage.getItem(USER_KEY) ?? 'null');
+  }
+
+  setUser(user: IAuthData['user']) {
+    localStorage.setItem(USER_KEY, JSON.stringify(user));
+  }
+
+  getAccessToken(): string {
+    return localStorage.getItem(ACCESS_TOKEN_KEY);
+  }
+
+  getRefreshToken(): string {
+    return localStorage.getItem(REFRESH_TOKEN_KEY);
   }
 }
 

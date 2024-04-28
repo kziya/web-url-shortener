@@ -2,36 +2,35 @@ import React, { useState } from 'react';
 
 import { AuthContext } from './AuthContext';
 import { IAuthData } from './AuthDataInterface';
-import AuthHttpService from './services/AuthHttpService';
-import AuthLocalstorageService from './services/AuthLocalstorageService';
+import AuthService from './services/AuthService';
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [authData, setAuthData] = useState<IAuthData | null>(
-    AuthLocalstorageService.getAuthData()
+    AuthService.getAuthData()
   );
 
   const login = async (email: string, password: string) => {
-    const authData = await AuthHttpService.login(email, password);
-    AuthLocalstorageService.setAuthData(authData);
+    const authData = await AuthService.login(email, password);
     setAuthData(authData);
   };
 
   const signUp = async (email: string, password: string) => {
-    const authData = await AuthHttpService.signUp(email, password);
+    const authData = await AuthService.signUp(email, password);
 
-    AuthLocalstorageService.setAuthData(authData);
     setAuthData(authData);
   };
 
   const logout = () => {
-    AuthLocalstorageService.clearAuthData();
+    AuthService.logout();
     setAuthData(null);
   };
 
   return (
-    <AuthContext.Provider value={{ authData, login, signUp, logout }}>
+    <AuthContext.Provider
+      value={{ authData, login, signUp, logout, setAuthData }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -47,17 +47,17 @@ export class AuthController {
     return this.authService.getVerifyStatus(tokenPayload.id);
   }
 
-  @Public()
-  @Get('verify/:uid')
-  async verifyUser(@Param('uid') uid: string): Promise<void> {
-    await this.authService.verifyUser(uid);
-  }
-
   @Post('verify/send')
   async sendVerifyEmail(
     @GetTokenPayload() tokenPayload: AuthTokenPayload
   ): Promise<void> {
     await this.authService.sendVerifyEmail(tokenPayload.id);
+  }
+
+  @Public()
+  @Post('verify/:uid')
+  async verifyUser(@Param('uid') uid: string): Promise<void> {
+    await this.authService.verifyUser(uid);
   }
 
   @Public()
