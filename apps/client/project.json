@@ -99,7 +99,7 @@
       "dependsOn": [
         "docker-build"
       ],
-      "command": "docker push kziya/web-url-shortener-client"
+      "command": "docker push kziya/web-url-shortener-client && doctl apps create-deployment 2e0ac5e0-205b-4182-848f-e8060cbdea23"
     }
   },
   "tags": []
