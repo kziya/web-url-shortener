@@ -72,7 +72,7 @@
       "dependsOn": [
         "docker-build"
       ],
-      "command": "docker push kziya/web-url-shortener-server"
+      "command": "docker push kziya/web-url-shortener-server && doctl apps create-deployment 761a6b59-a951-44d0-b829-414ebc8fbb91"
     }
   }
 }
