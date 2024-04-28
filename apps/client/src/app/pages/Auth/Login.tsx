@@ -8,6 +8,7 @@ import {
 import { useAuth } from '../../auth/AuthContext';
 import { useState } from 'react';
 import { getAuthErrorText } from './error/ErrorMessageMapper';
+import { Link as ReactRouterLink } from 'react-router-dom';
 
 export function Login() {
   const { login } = useAuth();
@@ -29,7 +30,10 @@ export function Login() {
           <div className={styles.formTitle}>
             <h1>Login and start sharing</h1>
             <h4>
-              Don't have an account ? <Link href="/auth/sign-up">Sign up</Link>
+              Don't have an account ?{' '}
+              <Link to="/auth/sign-up" component={ReactRouterLink}>
+                Sign up
+              </Link>
             </h4>
           </div>
           <AuthFormInputs

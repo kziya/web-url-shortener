@@ -8,6 +8,7 @@ import {
 import { useAuth } from '../../auth/AuthContext';
 import { useState } from 'react';
 import { getAuthErrorText } from './error/ErrorMessageMapper';
+import { Link as ReactRouterLink } from 'react-router-dom';
 
 export function SignUp() {
   const { signUp } = useAuth();
@@ -29,7 +30,10 @@ export function SignUp() {
           <div className={styles.formTitle}>
             <h1>Create your account</h1>
             <h4>
-              Already have an account ? <Link href="/auth/login">Login</Link>
+              Already have an account ?
+              <Link to="/auth/login" component={ReactRouterLink}>
+                Login
+              </Link>
             </h4>
           </div>
           <AuthFormInputs

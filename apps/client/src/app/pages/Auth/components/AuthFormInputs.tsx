@@ -2,6 +2,7 @@ import styles from '../auth.module.scss';
 import { Button, Alert, TextField } from '@mui/material';
 import { Link } from '@mui/joy';
 import { useState } from 'react';
+import { Link as ReactRouterLink } from 'react-router-dom';
 
 export enum AuthFormInputsType {
   Login = 'login',
@@ -58,7 +59,9 @@ export function AuthFormInputs({
       </div>
       {type === AuthFormInputsType.Login && (
         <div className={styles.forgetPassword}>
-          <Link href="/auth/forget-password">Forget your password ?</Link>
+          <Link to="/auth/forget-password" component={ReactRouterLink}>
+            Forget your password ?
+          </Link>
         </div>
       )}
       <div className={styles.submitButton}>
