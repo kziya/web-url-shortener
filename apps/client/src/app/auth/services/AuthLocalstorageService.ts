@@ -37,6 +37,10 @@ class AuthLocalstorageService {
   getAccessToken(): string {
     return localStorage.getItem(ACCESS_TOKEN_KEY);
   }
+
+  getRefreshToken(): string {
+    return localStorage.getItem(REFRESH_TOKEN_KEY);
+  }
 }
 
 export default new AuthLocalstorageService();

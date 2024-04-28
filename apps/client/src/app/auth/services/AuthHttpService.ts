@@ -29,6 +29,14 @@ class AuthHttpService {
     return response.data;
   }
 
+  async refreshToken(refreshToken: string): Promise<SuccessfulAuthResponseDto> {
+    const response = await axiosInstance.post('/auth/refresh-token', {
+      refreshToken,
+    });
+
+    return response.data;
+  }
+
   async sendVerifyMail(): Promise<SuccessfulAuthResponseDto> {
     return axiosInstance.post('/auth/verify/send');
   }

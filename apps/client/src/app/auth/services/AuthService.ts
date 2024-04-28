@@ -26,8 +26,20 @@ class AuthService {
     AuthLocalstorageService.setUser(user);
   }
 
+  async refreshToken(): Promise<void> {
+    try {
+      const refreshToken = AuthLocalstorageService.getRefreshToken();
+      const authData = await AuthHttpService.refreshToken(refreshToken);
+
+      AuthLocalstorageService.setAuthData(authData);
+    } catch (e) {
+      this.logout();
+    }
+  }
+
   logout(): void {
     AuthLocalstorageService.clearAuthData();
+    window.location.href = '/auth/login';
   }
 
   getAuthData(): IAuthData {
