@@ -23,7 +23,7 @@ export function VerifyByUid() {
 
         setAuthData(authData);
         timeout = setTimeout(() => {
-          window.location.reload();
+          window.location.href = '/';
         }, 5000);
       })
       .catch(() => {
