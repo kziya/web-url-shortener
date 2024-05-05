@@ -21,7 +21,9 @@ class AuthService {
     await AuthHttpService.verifyByUid(uid);
     const user = AuthLocalstorageService.getUser();
 
-    user.isVerified = true;
+    if (user) {
+      user.isVerified = true;
+    }
 
     AuthLocalstorageService.setUser(user);
   }
@@ -35,6 +37,15 @@ class AuthService {
     } catch (e) {
       this.logout();
     }
+  }
+
+  async updateVerifyStatus(): Promise<boolean> {
+    const result = await AuthHttpService.getVerifyStatus();
+    const authData = this.getAuthData();
+    authData.user.isVerified = result.status;
+
+    AuthLocalstorageService.setAuthData(authData);
+    return result.status;
   }
 
   logout(): void {

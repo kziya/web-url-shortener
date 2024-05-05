@@ -1,4 +1,7 @@
-import { SuccessfulAuthResponseDto } from '@web-url-shortener/domain';
+import {
+  GetVerifyStatusResponseDto,
+  SuccessfulAuthResponseDto,
+} from '@web-url-shortener/domain';
 import { axiosInstance } from '../../config/AxiosConfiguration';
 
 class AuthHttpService {
@@ -33,6 +36,12 @@ class AuthHttpService {
     const response = await axiosInstance.post('/auth/refresh-token', {
       refreshToken,
     });
+
+    return response.data;
+  }
+
+  async getVerifyStatus(): Promise<GetVerifyStatusResponseDto> {
+    const response = await axiosInstance.get('/auth/verify/status');
 
     return response.data;
   }
