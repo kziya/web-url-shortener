@@ -37,6 +37,15 @@ class AuthService {
     }
   }
 
+  async updateVerifyStatus(): Promise<boolean> {
+    const result = await AuthHttpService.getVerifyStatus();
+    const authData = this.getAuthData();
+    authData.user.isVerified = result.status;
+
+    AuthLocalstorageService.setAuthData(authData);
+    return result.status;
+  }
+
   logout(): void {
     AuthLocalstorageService.clearAuthData();
     window.location.href = '/auth/login';

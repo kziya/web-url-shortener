@@ -1,12 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AuthNavbar } from './components/AuthNavbar';
 import styles from './auth.module.scss';
 import { Alert, Button } from '@mui/material';
 import AuthHttpService from '../../auth/services/AuthHttpService';
+import AuthService from '../../auth/services/AuthService';
 
 export function Verify() {
   const [isVerifyMailSent, setIsVerifyMailSent] = useState(false);
   const [error, setError] = useState<boolean>(false);
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      const status = await AuthService.updateVerifyStatus();
+      if (status) {
+        window.location.reload();
+      }
+    }, 300);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <>
