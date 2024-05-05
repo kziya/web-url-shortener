@@ -20,13 +20,23 @@ export function AuthFormInputs({
   type,
   onFormSubmit,
   errorMessage,
+  successMessage,
 }: {
   type: AuthFormInputsType;
   onFormSubmit: (email: string, password: string) => void;
   errorMessage?: string;
+  successMessage?: string;
 }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  if (successMessage) {
+    return (
+      <div className={styles.formInputs}>
+        <Alert severity="success">{successMessage}</Alert>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.formInputs}>
