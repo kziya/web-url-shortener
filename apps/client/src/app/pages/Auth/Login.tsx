@@ -30,7 +30,7 @@ export function Login() {
           <div className={styles.formTitle}>
             <h1>Login and start sharing</h1>
             <h4>
-              Don't have an account ?{' '}
+              Don't have an account ?
               <Link to="/auth/sign-up" component={ReactRouterLink}>
                 Sign up
               </Link>
