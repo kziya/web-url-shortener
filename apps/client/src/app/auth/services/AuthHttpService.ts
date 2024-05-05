@@ -3,6 +3,7 @@ import {
   SuccessfulAuthResponseDto,
 } from '@web-url-shortener/domain';
 import { axiosInstance } from '../../config/AxiosConfiguration';
+import axios, { AxiosResponse } from 'axios';
 
 class AuthHttpService {
   async login(
@@ -46,12 +47,31 @@ class AuthHttpService {
     return response.data;
   }
 
-  async sendVerifyMail(): Promise<SuccessfulAuthResponseDto> {
+  async sendVerifyMail(): Promise<AxiosResponse<SuccessfulAuthResponseDto>> {
     return axiosInstance.post('/auth/verify/send');
   }
 
   async verifyByUid(uid: string): Promise<void> {
     return axiosInstance.post(`/auth/verify/${uid}`);
+  }
+
+  async sendResetPasswordMail(email: string): Promise<AxiosResponse> {
+    return axiosInstance.post('/auth/reset-password/send', { email });
+  }
+
+  async validateResetPasswordUid(uid: string): Promise<void> {
+    return axiosInstance.get(`/auth/reset-password/${uid}`);
+  }
+
+  async resetPassword(
+    uid: string,
+    password: string,
+    confirmPassword: string
+  ): Promise<void> {
+    return axiosInstance.post(`/auth/reset-password/${uid}`, {
+      password,
+      confirmPassword,
+    });
   }
 }
 

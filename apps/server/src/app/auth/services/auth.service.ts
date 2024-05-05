@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
@@ -13,6 +13,7 @@ import { AuthTokenService } from './auth-token.service';
 import { AuthHashService } from './auth-hash.service';
 import { AuthRedisService } from './auth-redis.service';
 import { AuthMailerService } from './auth-mailer.service';
+import { UidNotValidOrExpiredException } from '../exceptions/uid-not-valid-or-expired.exception';
 
 @Injectable()
 export class AuthService {
@@ -108,6 +109,14 @@ export class AuthService {
     const hashedPassword = await this.authHashService.hashPassword(password);
 
     await this.userRepository.updatePassword(email, hashedPassword);
+  }
+
+  async validateResetPasswordUid(uid: string): Promise<void> {
+    const email = await this.authRedisService.getResetPassword(uid);
+
+    if (!email) {
+      throw new UidNotValidOrExpiredException();
+    }
   }
 
   private generateSuccessfulAuthResponse(
