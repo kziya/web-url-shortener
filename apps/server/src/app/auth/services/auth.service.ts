@@ -109,6 +109,7 @@ export class AuthService {
     const hashedPassword = await this.authHashService.hashPassword(password);
 
     await this.userRepository.updatePassword(email, hashedPassword);
+    await this.authRedisService.deleteResetPassword(uid);
   }
 
   async validateResetPasswordUid(uid: string): Promise<void> {

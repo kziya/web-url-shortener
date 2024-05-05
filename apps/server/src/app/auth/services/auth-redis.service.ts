@@ -39,6 +39,10 @@ export class AuthRedisService {
     );
   }
 
+  async deleteResetPassword(uid: string): Promise<number> {
+    return this.redis.del(this.generateResetPasswordKey(uid));
+  }
+
   private generateVerifyKey(uid: string): string {
     return `VERIFY_${uid}`;
   }
