@@ -13,7 +13,12 @@ export function ForgetPassword() {
 
   const onForgetPasswordSubmit = (email: string) => {
     AuthHttpService.sendResetPasswordMail(email)
-      .then(() => setIsSentEmail(true))
+      .then(() => {
+        setIsSentEmail(true);
+        setTimeout(() => {
+          window.location.href = '/auth/login';
+        }, 3000);
+      })
       .catch(() => setError(true));
   };
 
@@ -32,7 +37,9 @@ export function ForgetPassword() {
             type={AuthFormInputsType.ForgetPassword}
             onFormSubmit={onForgetPasswordSubmit}
             successMessage={
-              isSentEmail ? 'Successfully sent reset email' : null
+              isSentEmail
+                ? 'Successfully sent reset email, you will be redirected to the login page'
+                : null
             }
             errorMessage={error ? 'Something went wrong' : null}
           />
