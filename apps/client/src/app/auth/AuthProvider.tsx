@@ -4,7 +4,9 @@ import { AuthContext } from './AuthContext';
 import { IAuthData } from './AuthDataInterface';
 import AuthService from './services/AuthService';
 import AuthLocalstorageService, {
+  ACCESS_TOKEN_LOCALSTORAGE_KEY,
   REFRESH_TOKEN_LOCALSTORAGE_KEY,
+  USER_LOCALSTORAGE_KEY,
 } from './services/AuthLocalstorageService';
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -31,16 +33,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   useEffect(() => {
-    const handleRefreshTokenChange = (e: StorageEvent) => {
-      if (e.key === REFRESH_TOKEN_LOCALSTORAGE_KEY) {
+    const handleAuthDataChange = (e: StorageEvent) => {
+      const authDataKeys = [
+        REFRESH_TOKEN_LOCALSTORAGE_KEY,
+        ACCESS_TOKEN_LOCALSTORAGE_KEY,
+        USER_LOCALSTORAGE_KEY,
+      ];
+
+      if (authDataKeys.includes(e.key)) {
         setAuthData(AuthLocalstorageService.getAuthData());
       }
     };
 
-    window.addEventListener('storage', handleRefreshTokenChange);
+    window.addEventListener('storage', handleAuthDataChange);
 
     return () => {
-      window.removeEventListener('storage', handleRefreshTokenChange);
+      window.removeEventListener('storage', handleAuthDataChange);
     };
   }, []);
 
