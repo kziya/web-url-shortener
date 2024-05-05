@@ -1,5 +1,5 @@
 import styles from './auth.module.scss';
-import { Alert, Button } from '@mui/material';
+import { Alert } from '@mui/material';
 import { Navigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
@@ -15,7 +15,7 @@ export function VerifyByUid() {
   const [isVerified, setIsVerified] = useState(false);
 
   useEffect(() => {
-    let timeout: any = null;
+    let timeout: NodeJS.Timeout = null;
     AuthService.verifyByUid(uid)
       .then(() => {
         setIsVerified(true);
@@ -24,7 +24,7 @@ export function VerifyByUid() {
         setAuthData(authData);
         timeout = setTimeout(() => {
           window.location.href = '/';
-        }, 5000);
+        }, 3000);
       })
       .catch(() => {
         setError(true);

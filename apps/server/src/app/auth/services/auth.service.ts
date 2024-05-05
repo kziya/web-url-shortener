@@ -71,6 +71,7 @@ export class AuthService {
 
     await this.authValidatorService.validateVerify(emailToVerify);
     await this.userRepository.verifyUser(emailToVerify);
+    await this.authRedisService.deleteVerifyUser(uid);
   }
 
   async sendVerifyEmail(id: string): Promise<void> {
