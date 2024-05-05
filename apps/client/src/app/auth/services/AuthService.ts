@@ -21,7 +21,9 @@ class AuthService {
     await AuthHttpService.verifyByUid(uid);
     const user = AuthLocalstorageService.getUser();
 
-    user.isVerified = true;
+    if (user) {
+      user.isVerified = true;
+    }
 
     AuthLocalstorageService.setUser(user);
   }
