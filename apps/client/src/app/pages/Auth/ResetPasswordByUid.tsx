@@ -1,11 +1,11 @@
+import styles from './auth.module.scss';
+import { Alert, Button, TextField } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Loading } from '../Loading/Loading';
 import AuthHttpService from '../../auth/services/AuthHttpService';
 import { NotFound } from '../NotFound/NotFound';
 import { AuthNavbar } from './components/AuthNavbar';
-import styles from './auth.module.scss';
-import { Alert, Button, TextField } from '@mui/material';
 
 export function ResetPasswordByUid() {
   const { uid } = useParams();
@@ -83,7 +83,12 @@ export function ResetPasswordByUid() {
                       password,
                       confirmPassword
                     )
-                      .then(() => setResetPassword(true))
+                      .then(() => {
+                        setResetPassword(true);
+                        setTimeout(() => {
+                          window.location.href = '/auth/login';
+                        }, 3000);
+                      })
                       .catch(() => setError(true));
                   }}
                 >
