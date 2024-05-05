@@ -74,4 +74,10 @@ export class AuthController {
   ): Promise<void> {
     await this.authService.resetPasswordByUid(uid, resetPasswordBodyDto);
   }
+
+  @Public()
+  @Get('reset-password/:uid')
+  async validateResetPassword(@Param('uid') uid: string): Promise<void> {
+    await this.authService.validateResetPasswordUid(uid);
+  }
 }

@@ -8,6 +8,7 @@ import { NotFound } from './pages/NotFound/NotFound';
 import { PrivateMain } from './pages/Private/PrivateMain';
 import { Verify } from './pages/Auth/Verify';
 import { VerifyByUid } from './pages/Auth/VerifyByUid';
+import { ResetPasswordByUid } from './pages/Auth/ResetPasswordByUid';
 
 export function AppRoutes() {
   return (
@@ -37,6 +38,11 @@ export function AppRoutes() {
             <ForgetPassword />
           </NotAuthGuard>
         }
+      />
+
+      <Route
+        path="/auth/reset-password/:uid"
+        element={<ResetPasswordByUid />}
       />
 
       <Route
