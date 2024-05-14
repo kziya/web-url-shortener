@@ -9,20 +9,25 @@ interface Props {
 const MainLayout = ({ children }: Props) => {
   return (
     <OuterWrapper>
-      <MainNavigation />
-      {children}
+      <InnerWrapper>
+        <MainNavigation />
+        {children}
+      </InnerWrapper>
     </OuterWrapper>
   );
 };
 
 const OuterWrapper = styled('main')({
-  padding: '36px 31px 45px',
   minHeight: '100%',
   backgroundImage: "url('assets/main-background.jpg')",
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
   overflow: 'hidden',
+});
+
+const InnerWrapper = styled('div')({
+  padding: '36px 31px 45px',
   display: 'flex',
   flexDirection: 'column',
   rowGap: '92px',
