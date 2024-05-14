@@ -36,8 +36,8 @@ const MailTitle = styled('div')({
   fontWeight: '800',
   background: '-webkit-linear-gradient(left, #eb568e, #144ee3)',
   backgroundClip: 'text',
-  '-webkit-background-clip': 'text',
-  '-webkit-text-fill-color': 'transparent',
+  WebkitBackgroundClip: 'text',
+  WebkitTextFillColor: 'transparent',
 });
 
 const FormWrapper = styled('div')({
