@@ -1,6 +1,6 @@
 import { Typography, styled } from '@mui/material';
 import React, { useState } from 'react';
-import { ClockIcon } from '../../../icons';
+import { ChartIcon, ClockIcon, SettingsIcon } from '../../../icons';
 
 enum MainPageTab {
   history = 'History',
@@ -15,11 +15,11 @@ const tabs = [
   },
   {
     title: MainPageTab.statistics,
-    icon: <ClockIcon />,
+    icon: <ChartIcon />,
   },
   {
     title: MainPageTab.settings,
-    icon: <ClockIcon />,
+    icon: <SettingsIcon />,
   },
 ];
 
@@ -44,7 +44,7 @@ const MainTabs = () => {
 
 const OuterWrapper = styled('div')({
   width: '540px',
-  margin: '0 auto',
+  margin: '19px auto 3px',
   maxWidth: '70%',
   boxShadow: '0px 4px 10px 0px #0000001A',
   background: '#00153D',
