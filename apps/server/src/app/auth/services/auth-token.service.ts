@@ -29,7 +29,6 @@ export class AuthTokenService {
   } {
     const tokenPayload: AuthTokenPayload = {
       id: user._id.toString(),
-      isVerified: user.isVerified,
     };
 
     return {

@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 
-import { ShortUrlStatus } from './enums/short-url-status.enum';
+import { ShortUrlStatus } from './enums/';
 
 @Schema({ timestamps: true, collection: 'shortUrls' })
 export class ShortUrl {
@@ -9,7 +9,7 @@ export class ShortUrl {
   updatedAt?: Date;
   createdAt?: Date;
 
-  @Prop({ required: true, type: Types.ObjectId, ref: 'users' })
+  @Prop({ type: Types.ObjectId })
   idUser: Types.ObjectId;
 
   @Prop({ unique: true, required: true })

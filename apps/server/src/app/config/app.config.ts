@@ -25,4 +25,6 @@ export default () => ({
     process.env.JWT_REFRESH_TOKEN_SECRET || error('JWT_REFRESH_TOKEN_SECRET'),
   JWT_REFRESH_TOKEN_EXPIRES_IN:
     process.env.JWT_REFRESH_TOKEN_EXPIRES_IN || '1d',
+
+  REDIRECT_APP_DOMAIN: 'https://r.kziya.com/',
 });
