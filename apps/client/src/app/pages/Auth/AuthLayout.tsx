@@ -41,7 +41,7 @@ const MailTitle = styled('div')({
 });
 
 const FormWrapper = styled('div')({
-  padding: '30px 44px 55px',
+  padding: '30px 44px 40px',
   background: '#6562F5',
   borderRadius: '32px',
   width: '520px',
@@ -50,7 +50,7 @@ const FormWrapper = styled('div')({
 
 const FormTitle = styled('h1')({
   color: '#fff',
-  fontWeight: 400,
+  fontWeight: 700,
   fontSize: '32px',
   textAlign: 'center',
   paddingBottom: '20px',
