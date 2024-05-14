@@ -10,6 +10,7 @@ import { ConfigModuleConfig } from './config/module/config-module.config';
 import { MongooseModuleConfig } from './config/module/mongoose-module.config';
 import { RedisModuleConfig } from './config/module/redis-module.config';
 import { MailerModuleConfig } from './config/module/mailer-module.config';
+import { ShortUrlModule } from './short-url/short-url.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { MailerModuleConfig } from './config/module/mailer-module.config';
     MailerModule.forRootAsync(MailerModuleConfig),
     AuthModule,
     UserModule,
+    ShortUrlModule,
   ],
 })
 export class AppModule {}
