@@ -10,17 +10,22 @@ const MainLayout = ({ children }: Props) => {
   return (
     <OuterWrapper>
       <MainNavigation />
+      {children}
     </OuterWrapper>
   );
 };
 
 const OuterWrapper = styled('main')({
   padding: '36px 31px 45px',
-  height: '100%',
+  minHeight: '100%',
   backgroundImage: "url('assets/main-background.jpg')",
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
+  overflow: 'hidden',
+  display: 'flex',
+  flexDirection: 'column',
+  rowGap: '92px',
 });
 
 export default MainLayout;
