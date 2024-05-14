@@ -1,5 +1,4 @@
-import styles from '../auth.module.scss';
-import { Button, Alert, TextField } from '@mui/material';
+import { Button, Alert, TextField, styled, InputLabel } from '@mui/material';
 import { Link } from '@mui/joy';
 import { useState } from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
@@ -32,58 +31,127 @@ export function AuthFormInputs({
 
   if (successMessage) {
     return (
-      <div className={styles.formInputs}>
+      <div>
         <Alert severity="success">{successMessage}</Alert>
       </div>
     );
   }
 
   return (
-    <div className={styles.formInputs}>
+    <Wrapper>
       {errorMessage && (
         <>
           <Alert severity="error">{errorMessage}</Alert>
           <br />{' '}
         </>
       )}
-      <div className={styles.textInputs}>
-        <TextField
-          id="email-input"
-          label="Email"
-          variant="outlined"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <br />
-        {type !== AuthFormInputsType.ForgetPassword && (
-          <TextField
-            id="password-input"
-            label="Password"
+      <Fields>
+        <TextFieldWrapper>
+          <StyledLabel>Email</StyledLabel>
+          <AuthTextField
+            id="email-input"
             variant="outlined"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            type="email"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
+        </TextFieldWrapper>
+        {type !== AuthFormInputsType.ForgetPassword && (
+          <TextFieldWrapper>
+            <StyledLabel>Password</StyledLabel>
+            <AuthTextField
+              id="password-input"
+              variant="outlined"
+              type="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </TextFieldWrapper>
         )}
-      </div>
+      </Fields>
       {type === AuthFormInputsType.Login && (
-        <div className={styles.forgetPassword}>
+        <BottomLinksWrapper>
           <Link to="/auth/forget-password" component={ReactRouterLink}>
-            Forget your password ?
+            Forgot your password ?
           </Link>
-        </div>
+          <Link to="/auth/sign-up" component={ReactRouterLink}>
+            Don’t have an account ? Sign up
+          </Link>
+        </BottomLinksWrapper>
       )}
-      <div className={styles.submitButton}>
-        <Button
+      {type === AuthFormInputsType.SignUp && (
+        <BottomLinksWrapper>
+          <Link to="/auth/login" component={ReactRouterLink}>
+            Already have an account ? Login
+          </Link>
+        </BottomLinksWrapper>
+      )}
+      <div>
+        <SubmitButton
           variant="contained"
           onClick={() => {
             onFormSubmit(email, password);
           }}
         >
           {submitButtonTextMapper[type]}
-        </Button>
+        </SubmitButton>
       </div>
-    </div>
+    </Wrapper>
   );
 }
+
+const Wrapper = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+});
+
+const Fields = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  rowGap: '20px',
+});
+
+const StyledLabel = styled(InputLabel)({
+  color: '#fff',
+});
+
+const TextFieldWrapper = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  rowGap: '4px',
+});
+
+const AuthTextField = styled(TextField)({
+  '& .MuiInputBase-root': {
+    height: '42px',
+  },
+
+  '& input': {
+    zIndex: 1,
+  },
+
+  '& fieldset': {
+    background: '#eee',
+    borderRadius: '5px',
+  },
+});
+
+const BottomLinksWrapper = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  rowGap: '5px',
+  padding: '15px 0 0',
+
+  '& a': {
+    color: '#fff',
+  },
+});
+
+const SubmitButton = styled(Button)({
+  width: '100%',
+  marginTop: '15px',
+  background: '#2B5BD7',
+  boxShadow: 'none',
+});

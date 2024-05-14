@@ -4,7 +4,7 @@ import { Link } from '@mui/joy';
 
 export function NotFound() {
   return (
-    <main className={styles.main}>
+    <main >
       <div className={styles.container}>
         <div>
           <Typography variant="h1">404 Not Found</Typography>

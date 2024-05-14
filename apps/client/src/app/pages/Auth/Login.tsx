@@ -1,6 +1,3 @@
-import styles from './auth.module.scss';
-import { Link } from '@mui/joy';
-import { AuthNavbar } from './components/AuthNavbar';
 import {
   AuthFormInputs,
   AuthFormInputsType,
@@ -8,7 +5,7 @@ import {
 import { useAuth } from '../../auth/AuthContext';
 import { useState } from 'react';
 import { getAuthErrorText } from './error/ErrorMessageMapper';
-import { Link as ReactRouterLink } from 'react-router-dom';
+import AuthLayout from './AuthLayout';
 
 export function Login() {
   const { login } = useAuth();
@@ -23,26 +20,12 @@ export function Login() {
   };
 
   return (
-    <>
-      <AuthNavbar />
-      <main className={styles.main}>
-        <div className={styles.form}>
-          <div className={styles.formTitle}>
-            <h1>Login and start sharing</h1>
-            <h4>
-              Don't have an account ?
-              <Link to="/auth/sign-up" component={ReactRouterLink}>
-                Sign up
-              </Link>
-            </h4>
-          </div>
-          <AuthFormInputs
-            type={AuthFormInputsType.Login}
-            onFormSubmit={onLoginSubmit}
-            errorMessage={errorMessage}
-          />
-        </div>
-      </main>
-    </>
+    <AuthLayout formTitle="Login and start sharing">
+      <AuthFormInputs
+        type={AuthFormInputsType.Login}
+        onFormSubmit={onLoginSubmit}
+        errorMessage={errorMessage}
+      />
+    </AuthLayout>
   );
 }

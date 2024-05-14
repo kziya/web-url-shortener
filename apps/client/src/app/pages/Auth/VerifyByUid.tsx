@@ -1,4 +1,4 @@
-import styles from './auth.module.scss';
+
 import { Alert } from '@mui/material';
 import { Navigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 import { Loading } from '../Loading/Loading';
 import AuthService from '../../auth/services/AuthService';
 import { useAuth } from '../../auth/AuthContext';
-import { AuthNavbar } from './components/AuthNavbar';
 
 export function VerifyByUid() {
   const { uid } = useParams();
@@ -35,11 +34,9 @@ export function VerifyByUid() {
 
   if (isVerified) {
     return (
-      <>
-        <AuthNavbar />
-        <main className={styles.main}>
-          <div className={styles.form}>
-            <div className={styles.formTitle}>
+        <main >
+          <div >
+            <div >
               <h1>Congratulations !</h1>
               <br />
               <Alert severity="success">
@@ -50,7 +47,6 @@ export function VerifyByUid() {
             <br />
           </div>
         </main>
-      </>
     );
   }
 
