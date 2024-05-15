@@ -1,6 +1,4 @@
-import styles from './auth.module.scss';
 import { Link } from '@mui/joy';
-import { AuthNavbar } from './components/AuthNavbar';
 import {
   AuthFormInputs,
   AuthFormInputsType,
@@ -9,6 +7,7 @@ import { useAuth } from '../../auth/AuthContext';
 import { useState } from 'react';
 import { getAuthErrorText } from './error/ErrorMessageMapper';
 import { Link as ReactRouterLink } from 'react-router-dom';
+import AuthLayout from './AuthLayout';
 
 export function SignUp() {
   const { signUp } = useAuth();
@@ -23,26 +22,12 @@ export function SignUp() {
   };
 
   return (
-    <>
-      <AuthNavbar />
-      <main className={styles.main}>
-        <form className={styles.form}>
-          <div className={styles.formTitle}>
-            <h1>Create your account</h1>
-            <h4>
-              Already have an account ?
-              <Link to="/auth/login" component={ReactRouterLink}>
-                Login
-              </Link>
-            </h4>
-          </div>
-          <AuthFormInputs
-            type={AuthFormInputsType.SignUp}
-            onFormSubmit={onSignUpSubmit}
-            errorMessage={errorMessage}
-          />
-        </form>
-      </main>
-    </>
+    <AuthLayout formTitle="Create your account">
+      <AuthFormInputs
+        type={AuthFormInputsType.SignUp}
+        onFormSubmit={onSignUpSubmit}
+        errorMessage={errorMessage}
+      />
+    </AuthLayout>
   );
 }

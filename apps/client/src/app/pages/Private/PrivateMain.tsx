@@ -1,12 +1,22 @@
-import { useAuth } from '../../auth/AuthContext';
+import { styled } from '@mui/material';
+import MainLayout from './MainLayout';
+import MainTabs from './components/MainTabs';
+import Search from './components/Search';
+import HistoryTable from './components/HistoryTable';
 
 export function PrivateMain() {
-  const { logout } = useAuth();
-
   return (
-    <>
-      <h1>Main</h1>
-      <button onClick={() => logout()}>Logout</button>
-    </>
+    <MainLayout>
+      <Content>
+        <Search />
+        <MainTabs />
+        <HistoryTable />
+      </Content>
+    </MainLayout>
   );
 }
+
+const Content = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+});

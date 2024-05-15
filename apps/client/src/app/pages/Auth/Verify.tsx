@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { AuthNavbar } from './components/AuthNavbar';
-import styles from './auth.module.scss';
-import { Alert, Button } from '@mui/material';
+
+import { Alert, Button, styled } from '@mui/material';
 import AuthHttpService from '../../auth/services/AuthHttpService';
 import AuthService from '../../auth/services/AuthService';
+import AuthLayout from './AuthLayout';
 
 export function Verify() {
   const [isVerifyMailSent, setIsVerifyMailSent] = useState(false);
@@ -21,51 +21,51 @@ export function Verify() {
   }, []);
 
   return (
-    <>
-      <AuthNavbar />
-      <main className={styles.main}>
-        <div className={styles.form}>
-          <div className={styles.formTitle}>
-            <h1>Thanks for sign-up</h1>
-            <br />
-            {isVerifyMailSent ? (
-              <Alert severity="success">
-                Verification mail successfully sent
-              </Alert>
-            ) : (
-              <h4> You need to verify you email</h4>
-            )}
+    <AuthLayout formTitle="Thanks for sign-up">
+      <div>
+        {isVerifyMailSent ? (
+          <Alert severity="success">Verification mail successfully sent</Alert>
+        ) : (
+          <Subtitle> You need to verify you email</Subtitle>
+        )}
 
-            {error && (
-              <Alert severity="error">
-                Something went wrong, try again later
-              </Alert>
-            )}
-          </div>
-          <br />
-
-          {!isVerifyMailSent && (
-            <div className={styles.submitButton}>
-              <Button
-                variant="contained"
-                onClick={() => {
-                  AuthHttpService.sendVerifyMail()
-                    .then((result) => {
-                      setIsVerifyMailSent(true);
-                      setError(false);
-                    })
-                    .catch((error) => {
-                      setIsVerifyMailSent(false);
-                      setError(true);
-                    });
-                }}
-              >
-                Send verify mail
-              </Button>
-            </div>
-          )}
+        {error && (
+          <Alert severity="error">Something went wrong, try again later</Alert>
+        )}
+      </div>
+      {!isVerifyMailSent && (
+        <div>
+          <StyledButton
+            variant="contained"
+            onClick={() => {
+              AuthHttpService.sendVerifyMail()
+                .then((result) => {
+                  setIsVerifyMailSent(true);
+                  setError(false);
+                })
+                .catch((error) => {
+                  setIsVerifyMailSent(false);
+                  setError(true);
+                });
+            }}
+          >
+            Send verify mail
+          </StyledButton>
         </div>
-      </main>
-    </>
+      )}
+    </AuthLayout>
   );
 }
+
+const Subtitle = styled('h4')({
+  color: '#fff',
+  fontSize: '20px',
+  fontWeight: 400,
+  textAlign: 'center',
+  padding: "20px 0"
+});
+
+const StyledButton = styled(Button)({
+  width: '100%',
+  marginTop: '15px',
+});
