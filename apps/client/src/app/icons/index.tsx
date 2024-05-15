@@ -6,3 +6,5 @@ export { ChartIcon } from './ChartIcon';
 export { SettingsIcon } from './SettingsIcon';
 export { ListCheckIcon } from './ListCheckIcon';
 export { FilterIcon } from './FilterIcon';
+export { CopyIcon } from './CopyIcon';
+export { DeleteIcon } from './DeleteIcon';
