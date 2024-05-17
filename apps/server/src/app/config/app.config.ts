@@ -9,6 +9,9 @@ export default () => ({
   API_PORT: process.env.API_PORT || 3000,
   API_DOMAIN: process.env.API_DOMAIN || 'http://localhost:3000',
 
+  REDIRECT_SERVICE_DOMAIN:
+    process.env.REDIRECT_SERVICE_DOMAIN || 'http://localhost:5000',
+
   MONGODB_CONNECTION_URI:
     process.env.MONGODB_CONNECTION_URI || error('MONGODB_CONNECTION_URI'),
 
@@ -25,4 +28,10 @@ export default () => ({
     process.env.JWT_REFRESH_TOKEN_SECRET || error('JWT_REFRESH_TOKEN_SECRET'),
   JWT_REFRESH_TOKEN_EXPIRES_IN:
     process.env.JWT_REFRESH_TOKEN_EXPIRES_IN || '1d',
+
+  PUBLIC_SHORT_URL_EXPIRES_IN_DAYS:
+    process.env.PUBLIC_SHORT_URL_EXPIRES_IN_DAYS || 7,
+
+  PRIVATE_SHORT_URL_EXPIRES_IN_DAYS:
+    process.env.PRIVATE_SHORT_URL_EXPIRES_IN_DAYS || 30,
 });

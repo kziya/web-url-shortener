@@ -1,9 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
-@Schema({ timestamps: true })
+@Schema({ timestamps: true, collection: 'users' })
 export class User {
   _id?: string;
+  updatedAt?: Date;
+  createdAt?: Date;
 
   @Prop({ unique: true, required: true })
   email: string;
