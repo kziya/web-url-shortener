@@ -1,0 +1,52 @@
+{
+  "name": "redirecter",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/redirecter/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/redirecter",
+        "main": "apps/redirecter/src/main.ts",
+        "tsConfig": "apps/redirecter/tsconfig.app.json",
+        "assets": ["apps/redirecter/src/assets"],
+        "webpackConfig": "apps/redirecter/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "redirecter:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "redirecter:build:development"
+        },
+        "production": {
+          "buildTarget": "redirecter:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/redirecter/jest.config.ts"
+      }
+    }
+  }
+}
