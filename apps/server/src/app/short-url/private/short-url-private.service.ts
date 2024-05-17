@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 
 import { AuthTokenPayload, FullShortUrl } from '@web-url-shortener/domain';
-import { ShortUrlRepository } from '../shared/repositories/short-url.repository';
 import { ShortUrlValidatorService } from '../shared/services/short-url-validator.service';
 import { ShortUrlMapperService } from '../shared/services/short-url-mapper.service';
 import { ShortUrlUuidService } from '../shared/services/short-url-uuid.service';
+import { ShortUrlPrivateRepository } from './short-url-private.repository';
 
 @Injectable()
 export class ShortUrlPrivateService {
   constructor(
-    private readonly shortUrlRepository: ShortUrlRepository,
+    private readonly shortUrlRepository: ShortUrlPrivateRepository,
     private readonly shortUrlValidatorService: ShortUrlValidatorService,
     private readonly shortUrlMapperService: ShortUrlMapperService,
     protected readonly shortUrlUuidService: ShortUrlUuidService
