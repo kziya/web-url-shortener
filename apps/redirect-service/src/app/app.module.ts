@@ -9,7 +9,7 @@ import Configuration from './config/configuration';
 @Module({
   imports: [
     MongooseModule.forRootAsync(MongooseModuleConfig),
-    ConfigModule.forRoot({ load: [Configuration] }),
+    ConfigModule.forRoot({ isGlobal: true, load: [Configuration] }),
     RedirectModule,
   ],
 })
