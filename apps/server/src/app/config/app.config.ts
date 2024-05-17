@@ -9,6 +9,9 @@ export default () => ({
   API_PORT: process.env.API_PORT || 3000,
   API_DOMAIN: process.env.API_DOMAIN || 'http://localhost:3000',
 
+  REDIRECT_SERVICE_DOMAIN:
+    process.env.REDIRECT_SERVICE_DOMAIN || 'http://localhost:5000',
+
   MONGODB_CONNECTION_URI:
     process.env.MONGODB_CONNECTION_URI || error('MONGODB_CONNECTION_URI'),
 

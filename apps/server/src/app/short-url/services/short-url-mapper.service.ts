@@ -12,7 +12,7 @@ export class ShortUrlMapperService {
       ...shortUrl,
       shortUrl: new URL(
         shortUrl.uuid,
-        this.configService.get('REDIRECT_APP_DOMAIN')
+        this.configService.get('REDIRECT_SERVICE_DOMAIN')
       ).href,
     };
   }
