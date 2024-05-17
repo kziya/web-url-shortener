@@ -19,6 +19,7 @@ export class ShortUrlPrivateService {
     tokenPayload: AuthTokenPayload,
     url: string
   ): Promise<FullShortUrl> {
+    this.shortUrlValidatorService.validateHttpUrl(url);
     const uuid = this.shortUrlUuidService.generatePrivateShortUrlUuid();
 
     const shortUrl = await this.shortUrlRepository.createPrivateShortUrl(

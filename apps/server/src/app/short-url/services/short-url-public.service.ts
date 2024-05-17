@@ -16,6 +16,8 @@ export class ShortUrlPublicService {
   ) {}
 
   async createPublicShortUrl(url: string): Promise<FullShortUrl> {
+    this.shortUrlValidatorService.validateHttpUrl(url);
+
     const uuid = this.shortUrlUuidService.generatePublicShortUrlUuid();
 
     const shortUrl = await this.shortUrlRepository.createPublicShortUrl(
