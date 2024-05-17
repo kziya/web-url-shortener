@@ -7,6 +7,7 @@ import { ShortUrlService } from './services/short-url.service';
 import { ShortUrlRepository } from './short-url.repository';
 import { ShortUrlValidatorService } from './services/short-url-validator.service';
 import { ShortUrlMapperService } from './services/short-url-mapper.service';
+import { ShortUrlUuidService } from './services/short-url-uuid.service';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ShortUrlMapperService } from './services/short-url-mapper.service';
     ShortUrlRepository,
     ShortUrlValidatorService,
     ShortUrlMapperService,
+    ShortUrlUuidService,
   ],
 })
 export class ShortUrlModule {}

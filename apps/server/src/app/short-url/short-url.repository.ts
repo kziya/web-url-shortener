@@ -12,9 +12,11 @@ export class ShortUrlRepository {
 
   async createPublicShortUrl(
     url: string,
-    uuid: string,
-    expiresAt: Date
+    uuid: string
   ): Promise<ShortUrlDocument> {
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + 7);
+
     return this.shortUrlModel.create({ url, uuid, expiresAt });
   }
 }
