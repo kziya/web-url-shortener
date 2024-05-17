@@ -11,7 +11,7 @@ export class ShortUrlValidatorService {
       throw new NotValidUrlException();
     }
 
-    if (!['http', 'https'].includes(protocol)) {
+    if (!['http:', 'https:'].includes(protocol)) {
       throw new NotValidUrlException();
     }
   }
