@@ -3,7 +3,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class ShortUrlUuidService {
-  generatePublicShortUrlUid(): string {
+  generatePublicShortUrlUuid(): string {
+    return uuidv4();
+  }
+
+  generatePrivateShortUrlUuid(): string {
     return uuidv4();
   }
 }
