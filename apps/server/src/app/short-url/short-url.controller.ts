@@ -10,7 +10,7 @@ export class ShortUrlController {
 
   @Public()
   @Post('public')
-  async createShortUrl(@Body('url') url: string): Promise<ShortUrl> {
-    return this.shortUrlService.publicCreateShortUrl(url);
+  async createPublicShortUrl(@Body('url') url: string): Promise<ShortUrl> {
+    return this.shortUrlService.createPublicShortUrl(url);
   }
 }

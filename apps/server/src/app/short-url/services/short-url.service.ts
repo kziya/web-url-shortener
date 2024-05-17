@@ -15,7 +15,7 @@ export class ShortUrlService {
     protected readonly shortUrlUuidService: ShortUrlUuidService
   ) {}
 
-  async publicCreateShortUrl(url: string): Promise<FullShortUrl> {
+  async createPublicShortUrl(url: string): Promise<FullShortUrl> {
     const uuid = this.shortUrlUuidService.generatePublicShortUrlUid();
 
     const shortUrl = await this.shortUrlRepository.createPublicShortUrl(
