@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ConfigService } from '@nestjs/config';
-import { Model } from 'mongoose';
+import { Model, UpdateWriteOpResult } from 'mongoose';
 
 import {
   ShortUrl,
@@ -49,5 +49,15 @@ export class ShortUrlPrivateRepository {
       })
       .skip(limit * (page - 1))
       .limit(limit);
+  }
+
+  async deleteShortUrl(
+    id: string,
+    idUser: string
+  ): Promise<UpdateWriteOpResult> {
+    return this.shortUrlModel.updateOne(
+      { _id: id, idUser },
+      { $set: { status: ShortUrlStatus.Archived } }
+    );
   }
 }

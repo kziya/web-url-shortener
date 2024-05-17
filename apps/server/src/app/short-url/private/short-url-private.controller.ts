@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import {
   AuthTokenPayload,
   FullShortUrl,
@@ -33,5 +41,13 @@ export class ShortUrlPrivateController {
       +page,
       status
     );
+  }
+
+  @Delete(':id')
+  async deleteShortUrl(
+    @GetTokenPayload() tokenPayload: AuthTokenPayload,
+    @Param('id') id: string
+  ): Promise<void> {
+    await this.shortUrlPrivateService.deleteShortUrl(tokenPayload, id);
   }
 }

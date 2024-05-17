@@ -14,7 +14,9 @@ export class ShortUrlMapperService {
   mapShortUrl(shortUrlDocument: ShortUrlDocument): FullShortUrl {
     const shortUrl = shortUrlDocument.toObject();
     const status =
-      +shortUrl.expiresAt < +new Date()
+      shortUrl.status === ShortUrlStatus.Archived
+        ? shortUrl.status
+        : +shortUrl.expiresAt < +new Date()
         ? ShortUrlStatus.Expired
         : shortUrl.status;
 

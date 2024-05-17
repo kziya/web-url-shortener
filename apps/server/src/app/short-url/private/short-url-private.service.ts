@@ -9,6 +9,7 @@ import { ShortUrlValidatorService } from '../shared/services/short-url-validator
 import { ShortUrlMapperService } from '../shared/services/short-url-mapper.service';
 import { ShortUrlUuidService } from '../shared/services/short-url-uuid.service';
 import { ShortUrlPrivateRepository } from './short-url-private.repository';
+import { UpdateWriteOpResult } from 'mongoose';
 
 @Injectable()
 export class ShortUrlPrivateService {
@@ -47,5 +48,12 @@ export class ShortUrlPrivateService {
     );
 
     return this.shortUrlMapperService.mapShortUrls(shortUrls);
+  }
+
+  async deleteShortUrl(
+    tokenPayload: AuthTokenPayload,
+    id: string
+  ): Promise<UpdateWriteOpResult> {
+    return this.shortUrlRepository.deleteShortUrl(id, tokenPayload.id);
   }
 }
