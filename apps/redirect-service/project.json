@@ -72,7 +72,7 @@
       "dependsOn": [
         "docker-build"
       ],
-      "command": "docker push kziya/web-url-shortener-redirect-service && doctl apps create-deployment bf1d42a0-efb1-4831-8aed-778dc1337df1"
+      "command": "docker push kziya/web-url-shortener-redirect-service && doctl apps create-deployment 3d1591ca-8d6c-4fa5-ae61-21784e53cf73"
     }
   }
 }
