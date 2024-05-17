@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
-import { AuthTokenPayload, FullShortUrl } from '@web-url-shortener/domain';
+import {
+  AuthTokenPayload,
+  FullShortUrl,
+  ShortUrlStatus,
+} from '@web-url-shortener/domain';
 import { ShortUrlValidatorService } from '../shared/services/short-url-validator.service';
 import { ShortUrlMapperService } from '../shared/services/short-url-mapper.service';
 import { ShortUrlUuidService } from '../shared/services/short-url-uuid.service';
@@ -22,12 +26,26 @@ export class ShortUrlPrivateService {
     this.shortUrlValidatorService.validateHttpUrl(url);
     const uuid = this.shortUrlUuidService.generatePrivateShortUrlUuid();
 
-    const shortUrl = await this.shortUrlRepository.createPrivateShortUrl(
+    const shortUrl = await this.shortUrlRepository.createShortUrl(
       tokenPayload.id,
       url,
       uuid
     );
 
     return this.shortUrlMapperService.mapShortUrl(shortUrl.toObject());
+  }
+
+  async getShortUrlList(
+    tokenPayload: AuthTokenPayload,
+    page: number,
+    status: ShortUrlStatus
+  ): Promise<FullShortUrl[]> {
+    const shortUrls = await this.shortUrlRepository.getShortUrlList(
+      tokenPayload.id,
+      page,
+      status
+    );
+
+    return this.shortUrlMapperService.mapShortUrls(shortUrls);
   }
 }

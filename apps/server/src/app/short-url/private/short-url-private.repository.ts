@@ -3,7 +3,11 @@ import { InjectModel } from '@nestjs/mongoose';
 import { ConfigService } from '@nestjs/config';
 import { Model } from 'mongoose';
 
-import { ShortUrl, ShortUrlDocument } from '@web-url-shortener/domain';
+import {
+  ShortUrl,
+  ShortUrlDocument,
+  ShortUrlStatus,
+} from '@web-url-shortener/domain';
 
 @Injectable()
 export class ShortUrlPrivateRepository {
@@ -12,7 +16,7 @@ export class ShortUrlPrivateRepository {
     private readonly configService: ConfigService
   ) {}
 
-  async createPrivateShortUrl(
+  async createShortUrl(
     idUser: string,
     url: string,
     uuid: string
@@ -24,5 +28,22 @@ export class ShortUrlPrivateRepository {
     );
 
     return this.shortUrlModel.create({ idUser, url, uuid, expiresAt });
+  }
+
+  async getShortUrlList(
+    idUser: string,
+    page: number,
+    status?: ShortUrlStatus
+  ): Promise<ShortUrlDocument[]> {
+    const limit = 20;
+    const statusFilter = status ? { status } : {};
+
+    return this.shortUrlModel
+      .find({
+        idUser,
+        ...statusFilter,
+      })
+      .skip(limit * (page - 1))
+      .limit(limit);
   }
 }

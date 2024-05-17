@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
-import { FullShortUrl, ShortUrl } from '@web-url-shortener/domain';
+import { FullShortUrl, ShortUrlDocument } from '@web-url-shortener/domain';
 
 @Injectable()
 export class ShortUrlMapperService {
   constructor(private readonly configService: ConfigService) {}
 
-  mapShortUrl(shortUrl: ShortUrl): FullShortUrl {
+  mapShortUrl(shortUrl: ShortUrlDocument): FullShortUrl {
     return {
-      ...shortUrl,
+      ...shortUrl.toObject(),
       shortUrl: new URL(
         shortUrl.uuid,
         this.configService.get('REDIRECT_SERVICE_DOMAIN')
@@ -17,7 +17,7 @@ export class ShortUrlMapperService {
     };
   }
 
-  mapShortUrls(shortUrls: ShortUrl[]): FullShortUrl[] {
+  mapShortUrls(shortUrls: ShortUrlDocument[]): FullShortUrl[] {
     return shortUrls.map((shortUrl) => this.mapShortUrl(shortUrl));
   }
 }
