@@ -14,11 +14,16 @@ export class ShortUrlRepository {
     @InjectModel(ShortUrl.name) private readonly shortUrlModel: Model<ShortUrl>
   ) {}
 
-  async getActiveShortUrlByUuid(uuid: string): Promise<ShortUrlDocument> {
-    return this.shortUrlModel.findOne({
-      uuid,
-      status: ShortUrlStatus.Active,
-      expiresAt: { $gt: new Date() },
-    });
+  async getActiveShortUrlByUuidAndIncClickCount(
+    uuid: string
+  ): Promise<ShortUrlDocument> {
+    return this.shortUrlModel.findOneAndUpdate(
+      {
+        uuid,
+        status: ShortUrlStatus.Active,
+        expiresAt: { $gt: new Date() },
+      },
+      { $inc: { clickCount: 1 } }
+    );
   }
 }
