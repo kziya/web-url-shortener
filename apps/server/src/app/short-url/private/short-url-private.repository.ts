@@ -36,7 +36,11 @@ export class ShortUrlPrivateRepository {
     status?: ShortUrlStatus
   ): Promise<ShortUrlDocument[]> {
     const limit = 20;
-    const statusFilter = status ? { status } : {};
+    const statusFilter = status
+      ? status === ShortUrlStatus.Expired
+        ? { expiresAt: { $lte: new Date() } }
+        : { status }
+      : {};
 
     return this.shortUrlModel
       .find({

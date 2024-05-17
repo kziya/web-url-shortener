@@ -1,15 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
-import { FullShortUrl, ShortUrlDocument } from '@web-url-shortener/domain';
+import {
+  FullShortUrl,
+  ShortUrlDocument,
+  ShortUrlStatus,
+} from '@web-url-shortener/domain';
 
 @Injectable()
 export class ShortUrlMapperService {
   constructor(private readonly configService: ConfigService) {}
 
-  mapShortUrl(shortUrl: ShortUrlDocument): FullShortUrl {
+  mapShortUrl(shortUrlDocument: ShortUrlDocument): FullShortUrl {
+    const shortUrl = shortUrlDocument.toObject();
+    const status =
+      +shortUrl.expiresAt < +new Date()
+        ? ShortUrlStatus.Expired
+        : shortUrl.status;
+
     return {
-      ...shortUrl.toObject(),
+      ...shortUrl,
+      status,
       shortUrl: new URL(
         shortUrl.uuid,
         this.configService.get('REDIRECT_SERVICE_DOMAIN')
