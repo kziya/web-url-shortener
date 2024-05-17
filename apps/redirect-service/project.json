@@ -7,7 +7,9 @@
   "targets": {
     "build": {
       "executor": "@nx/webpack:webpack",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "defaultConfiguration": "production",
       "options": {
         "target": "node",
@@ -15,8 +17,12 @@
         "outputPath": "dist/apps/redirect-service",
         "main": "apps/redirect-service/src/main.ts",
         "tsConfig": "apps/redirect-service/tsconfig.app.json",
-        "assets": ["apps/redirect-service/src/assets"],
-        "webpackConfig": "apps/redirect-service/webpack.config.js"
+        "assets": [
+          "apps/redirect-service/src/assets"
+        ],
+        "webpackConfig": "apps/redirect-service/webpack.config.js",
+        "babelUpwardRootMode": true,
+        "generatePackageJson": true
       },
       "configurations": {
         "development": {},
@@ -43,10 +49,30 @@
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "apps/redirect-service/jest.config.ts"
       }
+    },
+    "docker-build": {
+      "dependsOn": [
+        "build"
+      ],
+      "command": "docker build -f apps/redirect-service/Dockerfile dist/apps/redirect-service -t kziya/web-url-shortener-redirect-service"
+    },
+    "docker-run": {
+      "dependsOn": [
+        "docker-build"
+      ],
+      "command": "docker run -p 3000:3000 kziya/web-url-shortener-redirect-service"
+    },
+    "deploy:prod": {
+      "dependsOn": [
+        "docker-build"
+      ],
+      "command": "docker push kziya/web-url-shortener-redirect-service && doctl apps create-deployment bf1d42a0-efb1-4831-8aed-778dc1337df1"
     }
   }
 }
