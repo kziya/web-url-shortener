@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
 import { FullShortUrl } from '@web-url-shortener/domain';
-import { ShortUrlRepository } from '../short-url.repository';
-import { ShortUrlValidatorService } from './short-url-validator.service';
-import { ShortUrlMapperService } from './short-url-mapper.service';
-import { ShortUrlUuidService } from './short-url-uuid.service';
+import { ShortUrlRepository } from '../shared/repositories/short-url.repository';
+import { ShortUrlValidatorService } from '../shared/services/short-url-validator.service';
+import { ShortUrlMapperService } from '../shared/services/short-url-mapper.service';
+import { ShortUrlUuidService } from '../shared/services/short-url-uuid.service';
 
 @Injectable()
 export class ShortUrlPublicService {

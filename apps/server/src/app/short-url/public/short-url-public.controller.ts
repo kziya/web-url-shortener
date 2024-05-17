@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 
 import { FullShortUrl } from '@web-url-shortener/domain';
-import { ShortUrlPublicService } from '../services/short-url-public.service';
+import { ShortUrlPublicService } from './short-url-public.service';
 import { Public } from '../../auth/decorators/public.decorator';
 
 @Public()

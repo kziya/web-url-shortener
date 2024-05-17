@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthTokenPayload, FullShortUrl } from '@web-url-shortener/domain';
 
-import { ShortUrlPrivateService } from '../services/short-url-private.service';
+import { ShortUrlPrivateService } from './short-url-private.service';
 import { GetTokenPayload } from '../../auth/decorators/get-token-payload.decorator';
 
 @Controller('short-url/private')
