@@ -1,4 +1,5 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Res } from '@nestjs/common';
+import { Response } from 'express';
 
 import { RedirectService } from './redirect.service';
 
@@ -7,7 +8,7 @@ export class RedirectController {
   constructor(private readonly redirectService: RedirectService) {}
 
   @Get(':uuid')
-  async redirectByUuid(@Param('uuid') uuid: string) {
-    return this.redirectService.redirectByUid(uuid);
+  async redirectByUuid(@Res() res: Response, @Param('uuid') uuid: string) {
+    return this.redirectService.redirectByUid(res, uuid);
   }
 }
