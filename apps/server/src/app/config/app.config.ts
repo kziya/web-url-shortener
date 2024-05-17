@@ -29,5 +29,9 @@ export default () => ({
   JWT_REFRESH_TOKEN_EXPIRES_IN:
     process.env.JWT_REFRESH_TOKEN_EXPIRES_IN || '1d',
 
-  REDIRECT_APP_DOMAIN: 'https://r.kziya.com/',
+  PUBLIC_SHORT_URL_EXPIRES_IN_DAYS:
+    process.env.PUBLIC_SHORT_URL_EXPIRES_IN_DAYS || 7,
+
+  PRIVATE_SHORT_URL_EXPIRES_IN_DAYS:
+    process.env.PRIVATE_SHORT_URL_EXPIRES_IN_DAYS || 30,
 });
