@@ -25,6 +25,6 @@ export class ShortUrlPublicService {
       uuid
     );
 
-    return this.shortUrlMapperService.mapShortUrl(shortUrl.toObject());
+    return this.shortUrlMapperService.mapShortUrl(shortUrl);
   }
 }

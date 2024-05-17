@@ -12,6 +12,7 @@ export class ShortUrlMapperService {
   constructor(private readonly configService: ConfigService) {}
 
   mapShortUrl(shortUrlDocument: ShortUrlDocument): FullShortUrl {
+    console.log(shortUrlDocument);
     const shortUrl = shortUrlDocument.toObject();
     const status =
       shortUrl.status === ShortUrlStatus.Archived
