@@ -8,9 +8,9 @@ import {
 } from '@web-url-shortener/domain';
 import { ShortUrlValidatorService } from '../shared/services/short-url-validator.service';
 import { ShortUrlMapperService } from '../shared/services/short-url-mapper.service';
-import { ShortUrlUuidService } from '../shared/services/short-url-uuid.service';
 import { ShortUrlPrivateRepository } from './short-url-private.repository';
 import { NotFoundShortUrlException } from '../shared/exceptions/not-found-short-url.exception';
+import { ShortUrlUuidPrivateService } from './short-url-uuid-private.service';
 
 @Injectable()
 export class ShortUrlPrivateService {
@@ -18,7 +18,7 @@ export class ShortUrlPrivateService {
     private readonly shortUrlRepository: ShortUrlPrivateRepository,
     private readonly shortUrlValidatorService: ShortUrlValidatorService,
     private readonly shortUrlMapperService: ShortUrlMapperService,
-    protected readonly shortUrlUuidService: ShortUrlUuidService
+    protected readonly shortUrlUuidService: ShortUrlUuidPrivateService
   ) {}
 
   async createPrivateShortUrl(
@@ -26,7 +26,7 @@ export class ShortUrlPrivateService {
     url: string
   ): Promise<FullShortUrl> {
     this.shortUrlValidatorService.validateHttpUrl(url);
-    const uuid = this.shortUrlUuidService.generatePrivateShortUrlUuid();
+    const uuid = this.shortUrlUuidService.generateShortUrlUuid();
 
     const shortUrl = await this.shortUrlRepository.createShortUrl(
       tokenPayload.id,
