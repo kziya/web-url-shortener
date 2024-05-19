@@ -21,7 +21,7 @@ export class ShortUrlPrivateService {
     protected readonly shortUrlUuidService: ShortUrlUuidPrivateService
   ) {}
 
-  async createPrivateShortUrl(
+  async createShortUrl(
     tokenPayload: AuthTokenPayload,
     url: string
   ): Promise<FullShortUrl> {

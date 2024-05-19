@@ -28,7 +28,7 @@ export class ShortUrlPrivateController {
     @GetTokenPayload() tokenPayload: AuthTokenPayload,
     @Body('url') url: string
   ): Promise<FullShortUrl> {
-    return this.shortUrlPrivateService.createPrivateShortUrl(tokenPayload, url);
+    return this.shortUrlPrivateService.createShortUrl(tokenPayload, url);
   }
 
   @Get('list')
