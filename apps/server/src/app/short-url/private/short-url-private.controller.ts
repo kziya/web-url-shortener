@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Query,
 } from '@nestjs/common';
@@ -43,7 +44,7 @@ export class ShortUrlPrivateController {
     );
   }
 
-  @Post('renew/:id')
+  @Patch('renew/:id')
   async renewShortUrl(
     @GetTokenPayload() tokenPayload: AuthTokenPayload,
     @Param('id') id: string
