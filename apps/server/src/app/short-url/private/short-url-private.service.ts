@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { UpdateWriteOpResult } from 'mongoose';
 
 import {
   AuthTokenPayload,
@@ -9,7 +10,7 @@ import { ShortUrlValidatorService } from '../shared/services/short-url-validator
 import { ShortUrlMapperService } from '../shared/services/short-url-mapper.service';
 import { ShortUrlUuidService } from '../shared/services/short-url-uuid.service';
 import { ShortUrlPrivateRepository } from './short-url-private.repository';
-import { UpdateWriteOpResult } from 'mongoose';
+import { NotFoundShortUrlException } from '../shared/exceptions/not-found-short-url.exception';
 
 @Injectable()
 export class ShortUrlPrivateService {
@@ -48,6 +49,22 @@ export class ShortUrlPrivateService {
     );
 
     return this.shortUrlMapperService.mapShortUrls(shortUrls);
+  }
+
+  async renewShortUrl(
+    tokenPayload: AuthTokenPayload,
+    id: string
+  ): Promise<FullShortUrl> {
+    const shortUrlDocument = await this.shortUrlRepository.renewShortUrl(
+      tokenPayload.id,
+      id
+    );
+
+    if (!shortUrlDocument) {
+      throw new NotFoundShortUrlException();
+    }
+
+    return this.shortUrlMapperService.mapShortUrl(shortUrlDocument);
   }
 
   async deleteShortUrl(

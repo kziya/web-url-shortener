@@ -7,12 +7,12 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+
 import {
   AuthTokenPayload,
   FullShortUrl,
   ShortUrlStatus,
 } from '@web-url-shortener/domain';
-
 import { ShortUrlPrivateService } from './short-url-private.service';
 import { GetTokenPayload } from '../../auth/decorators/get-token-payload.decorator';
 
@@ -41,6 +41,14 @@ export class ShortUrlPrivateController {
       +page,
       status
     );
+  }
+
+  @Post('renew/:id')
+  async renewShortUrl(
+    @GetTokenPayload() tokenPayload: AuthTokenPayload,
+    @Param('id') id: string
+  ): Promise<FullShortUrl> {
+    return this.shortUrlPrivateService.renewShortUrl(tokenPayload, id);
   }
 
   @Delete(':id')

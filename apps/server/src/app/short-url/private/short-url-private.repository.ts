@@ -21,11 +21,7 @@ export class ShortUrlPrivateRepository {
     url: string,
     uuid: string
   ): Promise<ShortUrlDocument> {
-    const expiresAt = new Date();
-    expiresAt.setDate(
-      expiresAt.getDate() +
-        Number(this.configService.get('PRIVATE_SHORT_URL_EXPIRES_IN_DAYS'))
-    );
+    const expiresAt = this.createShortUrlExpiresAt();
 
     return this.shortUrlModel.create({ idUser, url, uuid, expiresAt });
   }
@@ -51,6 +47,20 @@ export class ShortUrlPrivateRepository {
       .limit(limit);
   }
 
+  async renewShortUrl(idUser: string, id: string): Promise<ShortUrlDocument> {
+    const expiresAt = this.createShortUrlExpiresAt();
+
+    return this.shortUrlModel.findOneAndUpdate(
+      {
+        _id: id,
+        idUser,
+        status: ShortUrlStatus.Active,
+      },
+      { $set: { expiresAt: expiresAt } },
+      { new: true }
+    );
+  }
+
   async deleteShortUrl(
     id: string,
     idUser: string
@@ -59,5 +69,15 @@ export class ShortUrlPrivateRepository {
       { _id: id, idUser },
       { $set: { status: ShortUrlStatus.Archived } }
     );
+  }
+
+  private createShortUrlExpiresAt(): Date {
+    const expiresAt = new Date();
+    expiresAt.setDate(
+      expiresAt.getDate() +
+        Number(this.configService.get('PRIVATE_SHORT_URL_EXPIRES_IN_DAYS'))
+    );
+
+    return expiresAt;
   }
 }
