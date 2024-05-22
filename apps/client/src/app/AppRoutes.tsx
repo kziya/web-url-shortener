@@ -9,6 +9,7 @@ import { PrivateMain } from './pages/Private/PrivateMain';
 import { Verify } from './pages/Auth/Verify';
 import { VerifyByUid } from './pages/Auth/VerifyByUid';
 import { ResetPasswordByUid } from './pages/Auth/ResetPasswordByUid';
+import ConfigureAccount from "./pages/Setting/App";
 
 export function AppRoutes() {
   return (
@@ -48,8 +49,17 @@ export function AppRoutes() {
       <Route
         path="/"
         element={
-          <AuthGuard>
+          <NotAuthGuard>
             <PrivateMain />
+          </NotAuthGuard>
+        }
+      />
+
+      <Route
+        path="/settings"
+        element={
+          <AuthGuard>
+            <ConfigureAccount />
           </AuthGuard>
         }
       />
