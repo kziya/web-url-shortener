@@ -12,7 +12,7 @@ import {
   Typography,
   styled,
 } from '@mui/material';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { CopyIcon, DeleteIcon } from '../../../icons';
 import { useShortUrl } from '../../../short-url/ShortUrlContext';
 import { useAuth } from '../../../auth/AuthContext';
@@ -62,18 +62,35 @@ const HistoryTable = () => {
   const { urlsList, urlListLoading, deleteUrl } = useShortUrl();
   const { authData } = useAuth();
 
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  const updateWidth = () => {
+    setScreenWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', updateWidth);
+    return () => {
+      window.removeEventListener('resize', updateWidth);
+    };
+  }, []);
+
   const handleCopy = (url: string) => {
     navigator.clipboard.writeText(url);
     toast.info(`${url} was copied to clipboard`);
   };
 
   const rows = useMemo(() => {
+    const maxSymbolsCount = (60 * screenWidth) / 1920;
     return urlsList.map((item) =>
       createData({
         data: {
           id: item._id,
           shortLink: item.shortUrl,
-          originalLink: item.url,
+          originalLink:
+            item.url.length > maxSymbolsCount
+              ? `${item.url.slice(0, maxSymbolsCount)}...`
+              : item.url,
           clicks: item.clickCount,
           date: item.expiresAt,
         },
@@ -81,7 +98,7 @@ const HistoryTable = () => {
         handleDelete: deleteUrl,
       })
     );
-  }, [urlsList]);
+  }, [urlsList, screenWidth]);
 
   return (
     <OuterWrapper>
