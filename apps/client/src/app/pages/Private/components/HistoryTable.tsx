@@ -236,7 +236,7 @@ const StyledTableHeadRow = styled(TableRow)({
     color: '#C9CED6',
   },
 
-  '& .MuiTableCell-root:first-child': {
+  '& .MuiTableCell-root:first-of-type': {
     borderRadius: '10px 0px 0px 0px',
   },
 
