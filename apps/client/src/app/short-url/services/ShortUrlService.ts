@@ -17,8 +17,14 @@ class ShortUrlService {
     return newUrl;
   }
 
-  async deleteUrl(id: string): Promise<void> {
-    await ShortUrlHttpService.deleteUrl(id);
+  async deletePrivateUrl(id: string): Promise<void> {
+    await ShortUrlHttpService.deletePrivateUrl(id);
+  }
+
+  async renewPrivateUrl(id: string): Promise<FullShortUrl> {
+    const newUrl = await ShortUrlHttpService.renewPrivateUrl(id);
+
+    return newUrl;
   }
 }
 

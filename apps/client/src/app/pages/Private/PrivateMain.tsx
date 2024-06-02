@@ -5,12 +5,13 @@ import Search from './components/Search';
 import HistoryTable from './components/HistoryTable';
 import { useShortUrl } from '../../short-url/ShortUrlContext';
 import { useEffect } from 'react';
+import { ShortUrlStatus } from '@web-url-shortener/domain';
 
 export function PrivateMain() {
-  const { getUrlsList, urlsList, urlListLoading } = useShortUrl();
+  const { getUrlsList } = useShortUrl();
 
   useEffect(() => {
-    getUrlsList(1);
+    getUrlsList(1, "active" as ShortUrlStatus);
   }, []);
 
   return (

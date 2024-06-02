@@ -13,7 +13,7 @@ import {
   styled,
 } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
-import { CopyIcon, DeleteIcon } from '../../../icons';
+import { CopyIcon, DeleteIcon, RefreshIcon } from '../../../icons';
 import { useShortUrl } from '../../../short-url/ShortUrlContext';
 import { useAuth } from '../../../auth/AuthContext';
 import { toast } from 'react-toastify';
@@ -30,12 +30,14 @@ interface CreateData {
   data: RowData;
   handleCopy: (url: string) => void;
   handleDelete: (id: string) => void;
+  handleRenew: (id: string) => void;
 }
 
 const createData = ({
   data: { clicks, date, id, originalLink, shortLink },
   handleCopy,
   handleDelete,
+  handleRenew,
 }: CreateData) => {
   return {
     id,
@@ -51,15 +53,21 @@ const createData = ({
     clicks,
     date: date.toDateString(),
     action: (
-      <StyledIconButton onClick={() => handleDelete(id)}>
-        <DeleteIcon />
-      </StyledIconButton>
+      <>
+        <StyledIconButton onClick={() => handleRenew(id)}>
+          <RefreshIcon />
+        </StyledIconButton>
+        <StyledIconButton onClick={() => handleDelete(id)}>
+          <DeleteIcon />
+        </StyledIconButton>
+      </>
     ),
   };
 };
 
 const HistoryTable = () => {
-  const { urlsList, urlListLoading, deleteUrl } = useShortUrl();
+  const { urlsList, urlListLoading, deleteUrl, renewPrivateUrl } =
+    useShortUrl();
   const { authData } = useAuth();
 
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
@@ -96,6 +104,7 @@ const HistoryTable = () => {
         },
         handleCopy,
         handleDelete: deleteUrl,
+        handleRenew: renewPrivateUrl,
       })
     );
   }, [urlsList, screenWidth]);
@@ -272,6 +281,12 @@ const StyledIconButton = styled(IconButton)({
   '&:hover': {
     border: '1px solid #353C4A',
   },
+
+  '& svg': {
+    width: '20px',
+    height: '20px',
+    fill: '#fff',
+  },
 });
 
 const LoaderWrapper = styled('div')({
@@ -291,6 +306,7 @@ const mockRows = [
     },
     handleCopy: () => null,
     handleDelete: () => null,
+    handleRenew: () => null,
   }),
   createData({
     data: {
@@ -302,6 +318,7 @@ const mockRows = [
     },
     handleCopy: () => null,
     handleDelete: () => null,
+    handleRenew: () => null,
   }),
   createData({
     data: {
@@ -313,6 +330,7 @@ const mockRows = [
     },
     handleCopy: () => null,
     handleDelete: () => null,
+    handleRenew: () => null,
   }),
   createData({
     data: {
@@ -324,6 +342,7 @@ const mockRows = [
     },
     handleCopy: () => null,
     handleDelete: () => null,
+    handleRenew: () => null,
   }),
   createData({
     data: {
@@ -335,6 +354,7 @@ const mockRows = [
     },
     handleCopy: () => null,
     handleDelete: () => null,
+    handleRenew: () => null,
   }),
 ];
 

@@ -8,3 +8,4 @@ export { ListCheckIcon } from './ListCheckIcon';
 export { FilterIcon } from './FilterIcon';
 export { CopyIcon } from './CopyIcon';
 export { DeleteIcon } from './DeleteIcon';
+export { RefreshIcon } from './RefreshIcon';
