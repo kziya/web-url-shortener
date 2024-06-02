@@ -51,7 +51,7 @@ const createData = ({
     clicks,
     date: date.toDateString(),
     action: (
-      <StyledIconButton>
+      <StyledIconButton onClick={() => handleDelete(id)}>
         <DeleteIcon />
       </StyledIconButton>
     ),
@@ -59,7 +59,7 @@ const createData = ({
 };
 
 const HistoryTable = () => {
-  const { urlsList, urlListLoading } = useShortUrl();
+  const { urlsList, urlListLoading, deleteUrl } = useShortUrl();
   const { authData } = useAuth();
 
   const handleCopy = (url: string) => {
@@ -78,7 +78,7 @@ const HistoryTable = () => {
           date: item.expiresAt,
         },
         handleCopy,
-        handleDelete: () => null,
+        handleDelete: deleteUrl,
       })
     );
   }, [urlsList]);

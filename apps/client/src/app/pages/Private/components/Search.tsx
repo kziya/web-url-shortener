@@ -16,7 +16,7 @@ const Search = () => {
 
   const handleSubmit = () => {
     if (!url) {
-      return toast.error('You should enter a url');
+      return toast.error('You should enter a valid url');
     }
     createPrivateUrl(url);
   };

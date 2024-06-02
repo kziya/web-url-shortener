@@ -26,9 +26,13 @@ class ShortUrlHttpService {
       {
         url,
       }
-    );  
+    );
 
     return response.data;
+  }
+
+  async deleteUrl(id: string): Promise<void> {
+    await axiosInstance.delete(`/short-url/private/${id}`);
   }
 }
 

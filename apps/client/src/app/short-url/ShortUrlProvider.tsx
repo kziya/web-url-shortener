@@ -16,7 +16,12 @@ export const ShortUrlProvider: React.FC<{ children: React.ReactNode }> = ({
       setUrlListLoading(true);
       const urlsList = await ShortUrlService.getUrlsList(page, status);
       setUrlListLoading(false);
-      setUrlsList(urlsList);
+      setUrlsList(
+        urlsList.map((item) => ({
+          ...item,
+          expiresAt: new Date(item.expiresAt),
+        }))
+      );
     } catch (error) {
       toast.error(
         'Error occured while getting urls list. Try to reload the page!'
@@ -28,10 +33,24 @@ export const ShortUrlProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       setNewPrivateLinkLoading(true);
       const newUrl = await ShortUrlService.createPrivateUrl(url);
-      console.log(newUrl);
+      setUrlsList((list) => [
+        { ...newUrl, expiresAt: new Date(newUrl.expiresAt) },
+        ...list,
+      ]);
       setNewPrivateLinkLoading(false);
     } catch (error) {
       toast.error('Error occured while creating url. Try again later!');
+    }
+  };
+
+  const deleteUrl = async (id: string) => {
+    try {
+      setUrlListLoading(true);
+      await ShortUrlService.deleteUrl(id);
+      setUrlsList((list) => list.filter((item) => item._id !== id));
+      setUrlListLoading(false);
+    } catch (error) {
+      toast.error('Error occured while deleting url. Try again later!');
     }
   };
 
@@ -43,6 +62,7 @@ export const ShortUrlProvider: React.FC<{ children: React.ReactNode }> = ({
         createPrivateUrl,
         urlListLoading,
         newPrivateUrlLoading,
+        deleteUrl,
       }}
     >
       {children}
