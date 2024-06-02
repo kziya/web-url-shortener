@@ -3,8 +3,18 @@ import MainLayout from './MainLayout';
 // import MainTabs from './components/MainTabs';
 import Search from './components/Search';
 import HistoryTable from './components/HistoryTable';
+import { useShortUrl } from '../../short-url/ShortUrlContext';
+import { useEffect } from 'react';
 
 export function PrivateMain() {
+  const { getUrlsList, urlsList } = useShortUrl();
+
+  useEffect(() => {
+    getUrlsList(1);
+  }, []);
+
+  console.log(urlsList);
+
   return (
     <MainLayout>
       <Content>

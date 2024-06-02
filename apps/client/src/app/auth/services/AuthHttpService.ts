@@ -3,7 +3,7 @@ import {
   SuccessfulAuthResponseDto,
 } from '@web-url-shortener/domain';
 import { axiosInstance } from '../../config/AxiosConfiguration';
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 
 class AuthHttpService {
   async login(

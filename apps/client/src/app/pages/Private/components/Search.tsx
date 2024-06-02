@@ -1,18 +1,40 @@
 import { Button, TextField, styled } from '@mui/material';
-import React from 'react';
+import { toast } from 'react-toastify';
+import React, { useState } from 'react';
 import { LinkIcon } from '../../../icons';
+import { useShortUrl } from '../../../short-url/ShortUrlContext';
 
 const Search = () => {
+  const { createPrivateUrl } = useShortUrl();
+
+  const [url, setUrl] = useState<string>('');
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setUrl(value);
+  };
+
+  const handleSubmit = () => {
+    if (!url) {
+      return toast.error('You should enter a url');
+    }
+    createPrivateUrl(url);
+  };
+
   return (
     <OuterWrapper>
       <SearchTextfield
         InputProps={{
           startAdornment: <LinkIcon />,
           endAdornment: (
-            <ShortenButton variant="contained">Shorten Now!</ShortenButton>
+            <ShortenButton variant="contained" onClick={handleSubmit}>
+              Shorten Now!
+            </ShortenButton>
           ),
         }}
         placeholder="Enter the link here"
+        onChange={handleInputChange}
+        value={url}
       />
     </OuterWrapper>
   );

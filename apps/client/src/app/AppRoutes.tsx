@@ -47,11 +47,20 @@ export function AppRoutes() {
       />
 
       <Route
-        path="/"
+        path="/main"
         element={
           <AuthGuard>
             <PrivateMain />
           </AuthGuard>
+        }
+      />
+
+      <Route
+        path="/"
+        element={
+          <NotAuthGuard>
+            <PrivateMain />
+          </NotAuthGuard>
         }
       />
 
