@@ -1,5 +1,4 @@
 import { styled } from '@mui/material';
-import profileImage from 'apps/client/src/assets/Image.png';
 
 const ProfileContainer = styled('div')`
   position: fixed;
@@ -20,7 +19,7 @@ const ProfileImage = styled('img')`
 const ProfileSection = () => {
   return (
     <ProfileContainer>
-      <ProfileImage src={profileImage} alt="Profile" />
+      <ProfileImage src={'/assets/Image.png'} alt="Profile" />
     </ProfileContainer>
   );
 };
