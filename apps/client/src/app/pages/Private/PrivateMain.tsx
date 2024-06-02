@@ -28,8 +28,12 @@ export function PrivateMain() {
   );
 }
 
-const Content = styled('div')({
+const Content = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   rowGap: '60px',
-});
+
+  [theme.breakpoints.down('sm')]: {
+    rowGap: '40px',
+  },
+}));

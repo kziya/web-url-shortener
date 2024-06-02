@@ -35,7 +35,16 @@ const Search = () => {
           startAdornment: <LinkIcon />,
           endAdornment: (
             <ShortenButton variant="contained" onClick={handleSubmit}>
-              {newPrivateUrlLoading ? <Loader /> : 'Shorten Now!'}
+              {newPrivateUrlLoading ? (
+                <Loader />
+              ) : (
+                <>
+                  <DesktopOnly>Shorten Now!</DesktopOnly>
+                  <MobileOnly>
+                    <LinkIcon />
+                  </MobileOnly>
+                </>
+              )}
             </ShortenButton>
           ),
         }}
@@ -47,13 +56,17 @@ const Search = () => {
   );
 };
 
-const OuterWrapper = styled('div')({
+const OuterWrapper = styled('div')(({ theme }) => ({
   width: '1100px',
   margin: '0 auto',
   maxWidth: '80%',
-});
 
-const SearchTextfield = styled(TextField)({
+  [theme.breakpoints.down('sm')]: {
+    maxWidth: '100%',
+  },
+}));
+
+const SearchTextfield = styled(TextField)(({ theme }) => ({
   width: '100%',
 
   '& .MuiInputBase-root': {
@@ -77,9 +90,15 @@ const SearchTextfield = styled(TextField)({
     zIndex: 1,
     color: '#C9CED6',
   },
-});
 
-const ShortenButton = styled(Button)({
+  [theme.breakpoints.down('sm')]: {
+    '&  .MuiInputBase-root > svg': {
+      display: 'none',
+    },
+  },
+}));
+
+const ShortenButton = styled(Button)(({ theme }) => ({
   minWidth: '180px',
   borderRadius: '48px',
   fontWeight: 600,
@@ -87,10 +106,31 @@ const ShortenButton = styled(Button)({
   zIndex: 1,
   height: '100%',
   textTransform: 'none',
-});
+
+  [theme.breakpoints.down('sm')]: {
+    minWidth: '50px',
+
+    '& > div': {
+      width: '28px',
+      height: '19px',
+    },
+  },
+}));
 
 const Loader = styled(CircularProgress)({
   color: '#fff',
 });
+
+const DesktopOnly = styled('div')(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    display: 'none',
+  },
+}));
+
+const MobileOnly = styled('div')(({ theme }) => ({
+  [theme.breakpoints.up('sm')]: {
+    display: 'none',
+  },
+}));
 
 export default Search;

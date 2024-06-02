@@ -99,7 +99,7 @@ const HistoryTable = () => {
             item.url.length > maxSymbolsCount
               ? `${item.url.slice(0, maxSymbolsCount)}...`
               : item.url,
-          clicks: authData?.user && item.clickCount,
+          clicks: authData?.user ? item.clickCount : undefined,
           date: item.expiresAt,
         },
         handleCopy,
@@ -149,9 +149,13 @@ const HistoryTable = () => {
                     {row.shortLink}
                   </TableCell>
                   <TableCell>{row.originalLink}</TableCell>
-                  <TableCell>{row.clicks || 'not available'}</TableCell>
-                  <TableCell>{row.date}</TableCell>
-                  <TableCell align="right">
+                  <TableCell style={{ minWidth: '115px' }}>
+                    {row.clicks === undefined ? 'not available' : row.clicks}
+                  </TableCell>
+                  <TableCell style={{ minWidth: '140px' }}>
+                    {row.date}
+                  </TableCell>
+                  <TableCell align="right" style={{ minWidth: '110px' }}>
                     {authData?.user ? row.action : 'not available'}
                   </TableCell>
                 </StyledTableBodyRow>
@@ -237,6 +241,17 @@ const StyledPaper = styled(Paper)({
   '& table': {
     borderCollapse: 'separate',
     borderSpacing: '0px 3px',
+  },
+
+  '&::-webkit-scrollbar': {
+    height: '8px',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: '#0D1117',
+    borderRadius: '4px',
+  },
+  '&::-webkit-scrollbar-thumb:hover': {
+    backgroundColor: '#555',
   },
 });
 

@@ -89,6 +89,7 @@ export const ShortUrlProvider: React.FC<{ children: React.ReactNode }> = ({
         )
       );
       setUrlListLoading(false);
+      toast.success("The url was successfully updated")
     } catch (error) {
       toast.error('Error occured while renewing url. Try again later!');
       setUrlListLoading(false);

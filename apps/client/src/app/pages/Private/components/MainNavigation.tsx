@@ -29,7 +29,7 @@ const MainNavigation = () => {
   );
 };
 
-const Wrapper = styled('nav')({
+const Wrapper = styled('nav')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
@@ -37,7 +37,12 @@ const Wrapper = styled('nav')({
   '& a': {
     textDecoration: 'none',
   },
-});
+
+  [theme.breakpoints.down('sm')]: {
+    flexDirection: 'column-reverse',
+    rowGap: "20px"
+  },
+}));
 
 const Logo = styled('div')({
   fontSize: '40px',
