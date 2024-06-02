@@ -133,8 +133,8 @@ const HistoryTable = () => {
                   </LoaderWrapper>
                 </TableCell>
               </StyledTableBodyRow>
-            ) : (
-              (authData.user ? rows : mockRows).map((row) => (
+            ) : rows.length ? (
+              rows.map((row) => (
                 <StyledTableBodyRow key={row.id}>
                   <TableCell component="th" scope="row">
                     {row.shortLink}
@@ -145,6 +145,14 @@ const HistoryTable = () => {
                   <TableCell align="right">{row.action}</TableCell>
                 </StyledTableBodyRow>
               ))
+            ) : (
+              <StyledTableBodyRow>
+                <TableCell colSpan={5}>
+                  <LoaderWrapper>
+                    Click "Shorten now!" to add your first url
+                  </LoaderWrapper>
+                </TableCell>
+              </StyledTableBodyRow>
             )}
           </TableBody>
         </Table>
