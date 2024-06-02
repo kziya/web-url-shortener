@@ -7,13 +7,11 @@ import { useShortUrl } from '../../short-url/ShortUrlContext';
 import { useEffect } from 'react';
 
 export function PrivateMain() {
-  const { getUrlsList, urlsList } = useShortUrl();
+  const { getUrlsList, urlsList, urlListLoading } = useShortUrl();
 
   useEffect(() => {
     getUrlsList(1);
   }, []);
-
-  console.log(urlsList);
 
   return (
     <MainLayout>

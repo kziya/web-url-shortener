@@ -8,10 +8,20 @@ export const ShortUrlProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [urlsList, setUrlsList] = useState<FullShortUrl[]>([]);
+  const [urlListLoading, setUrlListLoading] = useState<boolean>(false);
+  const [newPrivateUrlLoading, setNewPrivateLinkLoading] = useState(false);
 
   const getUrlsList = async (page: number, status?: ShortUrlStatus) => {
-    const urlsList = await ShortUrlService.getUrlsList(page, status);
-    setUrlsList(urlsList);
+    try {
+      setUrlListLoading(true);
+      const urlsList = await ShortUrlService.getUrlsList(page, status);
+      setUrlListLoading(false);
+      setUrlsList(urlsList);
+    } catch (error) {
+      toast.error(
+        'Error occured while getting urls list. Try to reload the page!'
+      );
+    }
   };
 
   const createPrivateUrl = async (url: string) => {
@@ -24,7 +34,7 @@ export const ShortUrlProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <ShortUrlContext.Provider
-      value={{ urlsList, getUrlsList, createPrivateUrl }}
+      value={{ urlsList, getUrlsList, createPrivateUrl, urlListLoading }}
     >
       {children}
     </ShortUrlContext.Provider>

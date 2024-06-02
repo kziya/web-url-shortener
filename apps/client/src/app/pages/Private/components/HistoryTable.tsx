@@ -11,27 +11,37 @@ import {
   Typography,
   styled,
 } from '@mui/material';
-import React from 'react';
-import {
-  CopyIcon,
-  DeleteIcon,
-  FilterIcon,
-  ListCheckIcon,
-} from '../../../icons';
+import React, { useMemo } from 'react';
+import { CopyIcon, DeleteIcon } from '../../../icons';
+import { useShortUrl } from '../../../short-url/ShortUrlContext';
 
 const HistoryTable = () => {
+  const { urlsList, urlListLoading } = useShortUrl();
+
+  const rows = useMemo(() => {
+    return urlsList.map((item) =>
+      createData(
+        item._id,
+        item.shortUrl,
+        item.url,
+        item.clickCount,
+        item.expiresAt
+      )
+    );
+  }, [urlsList]);
+
   return (
     <OuterWrapper>
       <TableActions>
-        <HistoryText>History (4)</HistoryText>
-        <ActionsWrapper>
+        <HistoryText>History ({urlsList.length})</HistoryText>
+        {/* <ActionsWrapper>
           <ActionButton variant="contained" startIcon={<ListCheckIcon />}>
             Bulk Edit
           </ActionButton>
           <ActionButton variant="contained" startIcon={<FilterIcon />}>
             Filter
           </ActionButton>
-        </ActionsWrapper>
+        </ActionsWrapper> */}
       </TableActions>
       <TableContainer component={StyledPaper}>
         <Table>
@@ -133,7 +143,7 @@ const StyledPaper = styled(Paper)({
 
 const StyledTableHeadRow = styled(TableRow)({
   background: '#0D1117',
-  
+
   '& .MuiTableCell-root': {
     color: '#C9CED6',
   },
@@ -181,7 +191,7 @@ function createData(
   shortLink: string,
   originalLink: string,
   clicks: number,
-  date: string
+  date: Date
 ) {
   return {
     id,
@@ -195,7 +205,7 @@ function createData(
     ),
     originalLink,
     clicks,
-    date,
+    date: date.toDateString(),
     action: (
       <StyledIconButton>
         <DeleteIcon />
@@ -203,13 +213,5 @@ function createData(
     ),
   };
 }
-
-const rows = [
-  createData('id-1', 'test1.com', 'original1.com', 3, 'Oct - 10 -2023'),
-  createData('id-2', 'test2.com', 'original2.com', 1, 'Oct - 10 -2023'),
-  createData('id-3', 'test3.com', 'original3.com', 4, 'Oct - 10 -2023'),
-  createData('id-4', 'test4.com', 'original4.com', 8, 'Oct - 10 -2023'),
-  createData('id-5', 'test5.com', 'original5.com', 35, 'Oct - 10 -2023'),
-];
 
 export default HistoryTable;

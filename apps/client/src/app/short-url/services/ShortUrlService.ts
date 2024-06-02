@@ -8,7 +8,10 @@ class ShortUrlService {
   ): Promise<FullShortUrl[]> {
     const authData = await ShortUrlHttpService.getUrlsList(page, status);
 
-    return authData;
+    return authData.map((item) => ({
+      ...item,
+      expiresAt: new Date(item.expiresAt),
+    }));
   }
 
   async createPrivateUrl(url: string): Promise<FullShortUrl> {
