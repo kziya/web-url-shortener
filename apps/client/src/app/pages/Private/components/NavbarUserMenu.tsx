@@ -1,10 +1,18 @@
-import { Button, Menu, MenuItem, Typography, styled } from '@mui/material';
+import {
+  Button,
+  CircularProgress,
+  Menu,
+  MenuItem,
+  Typography,
+  styled,
+} from '@mui/material';
 import React, { useState } from 'react';
 import { MenuIcon } from '../../../icons';
 import { useAuth } from '../../../auth/AuthContext';
 
 const NavbarUserMenu = () => {
-  const { logout } = useAuth();
+  const { logout, authData, sendResetPasswordMail, sendResetEmailLoading } =
+    useAuth();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -18,6 +26,11 @@ const NavbarUserMenu = () => {
   const handleLogut = () => {
     logout();
     handleClose();
+  };
+
+  const handleResetPassword = () => {
+    const email = authData.user.email;
+    sendResetPasswordMail(email);
   };
 
   return (
@@ -39,6 +52,10 @@ const NavbarUserMenu = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
+        <MenuItem onClick={handleResetPassword}>
+          <div>Reset password</div>
+          {sendResetEmailLoading && <Loader size={20} />}
+        </MenuItem>
         <MenuItem onClick={handleLogut}>Log Out</MenuItem>
       </StyledMenu>
     </div>
@@ -68,6 +85,14 @@ const StyledMenu = styled(Menu)({
     background: '#1976d2',
     color: '#ffffff',
   },
+
+  '& .MuiButtonBase-root': {
+    columnGap: '10px',
+  },
+});
+
+const Loader = styled(CircularProgress)({
+  color: '#fff',
 });
 
 export default NavbarUserMenu;

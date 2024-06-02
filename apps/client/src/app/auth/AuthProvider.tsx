@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { AuthContext } from './AuthContext';
 import { IAuthData } from './AuthDataInterface';
@@ -15,6 +16,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [authData, setAuthData] = useState<IAuthData | null>(
     AuthService.getAuthData()
   );
+  const [sendResetEmailLoading, setSendResetEmailLoading] =
+    useState<boolean>(false);
 
   const login = async (email: string, password: string) => {
     const authData = await AuthService.login(email, password);
@@ -30,6 +33,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const logout = () => {
     AuthService.logout();
     setAuthData(null);
+  };
+
+  const sendResetPasswordMail = async (email: string): Promise<void> => {
+    setSendResetEmailLoading(true);
+    await AuthService.sendResetPasswordMail(email);
+    toast.success('Verification email has been sent to your email');
+    setSendResetEmailLoading(false);
   };
 
   useEffect(() => {
@@ -54,7 +64,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <AuthContext.Provider
-      value={{ authData, login, signUp, logout, setAuthData }}
+      value={{
+        authData,
+        login,
+        signUp,
+        logout,
+        setAuthData,
+        sendResetPasswordMail,
+        sendResetEmailLoading,
+      }}
     >
       {children}
     </AuthContext.Provider>

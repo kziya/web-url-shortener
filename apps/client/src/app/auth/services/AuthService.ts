@@ -56,6 +56,10 @@ class AuthService {
   getAuthData(): IAuthData {
     return AuthLocalstorageService.getAuthData();
   }
+
+  async sendResetPasswordMail(email: string): Promise<void> {
+    await AuthHttpService.sendResetPasswordMail(email);
+  }
 }
 
 export default new AuthService();

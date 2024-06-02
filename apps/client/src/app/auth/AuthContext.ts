@@ -7,6 +7,8 @@ export interface IAuthContext {
   signUp: (email: string, password: string) => Promise<void>;
   logout: () => void;
   setAuthData: Dispatch<SetStateAction<IAuthData>>;
+  sendResetPasswordMail: (email: string) => Promise<void>;
+  sendResetEmailLoading: boolean;
 }
 
 export const AuthContext = createContext<IAuthContext>({
@@ -15,6 +17,8 @@ export const AuthContext = createContext<IAuthContext>({
   signUp: () => null,
   logout: () => null,
   setAuthData: () => null,
+  sendResetPasswordMail: () => null,
+  sendResetEmailLoading: false,
 });
 
 export const useAuth = () => {

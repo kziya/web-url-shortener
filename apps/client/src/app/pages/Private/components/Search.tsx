@@ -28,11 +28,7 @@ const Search = () => {
           startAdornment: <LinkIcon />,
           endAdornment: (
             <ShortenButton variant="contained" onClick={handleSubmit}>
-              {newPrivateUrlLoading ? (
-                <CircularProgress color="info" />
-              ) : (
-                'Shorten Now!'
-              )}
+              {newPrivateUrlLoading ? <Loader /> : 'Shorten Now!'}
             </ShortenButton>
           ),
         }}
@@ -84,6 +80,10 @@ const ShortenButton = styled(Button)({
   zIndex: 1,
   height: '100%',
   textTransform: 'none',
+});
+
+const Loader = styled(CircularProgress)({
+  color: '#fff',
 });
 
 export default Search;
