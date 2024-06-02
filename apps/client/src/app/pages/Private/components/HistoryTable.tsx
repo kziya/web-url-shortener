@@ -22,7 +22,7 @@ interface RowData {
   id: string;
   shortLink: string;
   originalLink: string;
-  clicks: number;
+  clicks?: number;
   date: Date;
 }
 
@@ -85,7 +85,7 @@ const HistoryTable = () => {
 
   const handleCopy = (url: string) => {
     navigator.clipboard.writeText(url);
-    toast.info(`${url} was copied to clipboard`);
+    toast.success('Url was copied to clipboard');
   };
 
   const rows = useMemo(() => {
@@ -99,7 +99,7 @@ const HistoryTable = () => {
             item.url.length > maxSymbolsCount
               ? `${item.url.slice(0, maxSymbolsCount)}...`
               : item.url,
-          clicks: item.clickCount,
+          clicks: authData?.user && item.clickCount,
           date: item.expiresAt,
         },
         handleCopy,
@@ -149,9 +149,11 @@ const HistoryTable = () => {
                     {row.shortLink}
                   </TableCell>
                   <TableCell>{row.originalLink}</TableCell>
-                  <TableCell>{row.clicks}</TableCell>
+                  <TableCell>{row.clicks || 'not available'}</TableCell>
                   <TableCell>{row.date}</TableCell>
-                  <TableCell align="right">{row.action}</TableCell>
+                  <TableCell align="right">
+                    {authData?.user ? row.action : 'not available'}
+                  </TableCell>
                 </StyledTableBodyRow>
               ))
             ) : (

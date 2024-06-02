@@ -6,12 +6,15 @@ import HistoryTable from './components/HistoryTable';
 import { useShortUrl } from '../../short-url/ShortUrlContext';
 import { useEffect } from 'react';
 import { ShortUrlStatus } from '@web-url-shortener/domain';
+import { useAuth } from '../../auth/AuthContext';
 
 export function PrivateMain() {
   const { getUrlsList } = useShortUrl();
+  const { authData } = useAuth();
 
   useEffect(() => {
-    getUrlsList(1, "active" as ShortUrlStatus);
+    if (!authData?.user) return;
+    getUrlsList(1, 'active' as ShortUrlStatus);
   }, []);
 
   return (

@@ -6,6 +6,7 @@ export interface IShortUrlContext {
   urlListLoading: boolean;
   getUrlsList: (page: number, status?: ShortUrlStatus) => Promise<void>;
   createPrivateUrl: (url: string) => Promise<void>;
+  createPublicUrl: (url: string) => Promise<void>;
   newPrivateUrlLoading: boolean;
   deleteUrl: (id: string) => Promise<void>;
   renewPrivateUrl: (id: string) => Promise<void>;
@@ -16,6 +17,7 @@ export const ShortUrlContext = createContext<IShortUrlContext>({
   urlListLoading: false,
   getUrlsList: () => null,
   createPrivateUrl: () => null,
+  createPublicUrl: () => null,
   newPrivateUrlLoading: false,
   deleteUrl: () => null,
   renewPrivateUrl: () => null,

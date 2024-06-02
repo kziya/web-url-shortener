@@ -3,9 +3,12 @@ import { toast } from 'react-toastify';
 import React, { useState } from 'react';
 import { LinkIcon } from '../../../icons';
 import { useShortUrl } from '../../../short-url/ShortUrlContext';
+import { useAuth } from '../../../auth/AuthContext';
 
 const Search = () => {
-  const { createPrivateUrl, newPrivateUrlLoading } = useShortUrl();
+  const { createPrivateUrl, newPrivateUrlLoading, createPublicUrl } =
+    useShortUrl();
+  const { authData } = useAuth();
 
   const [url, setUrl] = useState<string>('');
 
@@ -18,7 +21,11 @@ const Search = () => {
     if (!url) {
       return toast.error('You should enter a valid url');
     }
-    createPrivateUrl(url);
+    if (!authData?.user) {
+      createPublicUrl(url);
+    } else {
+      createPrivateUrl(url);
+    }
   };
 
   return (

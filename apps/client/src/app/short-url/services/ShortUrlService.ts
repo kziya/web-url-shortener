@@ -17,6 +17,12 @@ class ShortUrlService {
     return newUrl;
   }
 
+  async createPublicUrl(url: string): Promise<FullShortUrl> {
+    const newUrl = await ShortUrlHttpService.createPublicUrl(url);
+
+    return newUrl;
+  }
+
   async deletePrivateUrl(id: string): Promise<void> {
     await ShortUrlHttpService.deletePrivateUrl(id);
   }
