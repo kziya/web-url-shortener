@@ -1,11 +1,11 @@
-import { Button, TextField, styled } from '@mui/material';
+import { Button, CircularProgress, TextField, styled } from '@mui/material';
 import { toast } from 'react-toastify';
 import React, { useState } from 'react';
 import { LinkIcon } from '../../../icons';
 import { useShortUrl } from '../../../short-url/ShortUrlContext';
 
 const Search = () => {
-  const { createPrivateUrl } = useShortUrl();
+  const { createPrivateUrl, newPrivateUrlLoading } = useShortUrl();
 
   const [url, setUrl] = useState<string>('');
 
@@ -28,7 +28,11 @@ const Search = () => {
           startAdornment: <LinkIcon />,
           endAdornment: (
             <ShortenButton variant="contained" onClick={handleSubmit}>
-              Shorten Now!
+              {newPrivateUrlLoading ? (
+                <CircularProgress color="info" />
+              ) : (
+                'Shorten Now!'
+              )}
             </ShortenButton>
           ),
         }}
@@ -61,7 +65,7 @@ const SearchTextfield = styled(TextField)({
     boxShadow: ' 0px 4px 10px 0px #0000001A',
   },
 
-  '& svg': {
+  '&  .MuiInputBase-root > svg': {
     zIndex: 1,
     marginRight: '20px',
   },

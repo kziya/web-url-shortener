@@ -26,7 +26,10 @@ export const ShortUrlProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const createPrivateUrl = async (url: string) => {
     try {
-      await ShortUrlService.createPrivateUrl(url);
+      setNewPrivateLinkLoading(true);
+      const newUrl = await ShortUrlService.createPrivateUrl(url);
+      console.log(newUrl);
+      setNewPrivateLinkLoading(false);
     } catch (error) {
       toast.error('Error occured while creating url. Try again later!');
     }
@@ -34,7 +37,13 @@ export const ShortUrlProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <ShortUrlContext.Provider
-      value={{ urlsList, getUrlsList, createPrivateUrl, urlListLoading }}
+      value={{
+        urlsList,
+        getUrlsList,
+        createPrivateUrl,
+        urlListLoading,
+        newPrivateUrlLoading,
+      }}
     >
       {children}
     </ShortUrlContext.Provider>

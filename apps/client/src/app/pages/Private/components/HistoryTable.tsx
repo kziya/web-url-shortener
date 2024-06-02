@@ -1,5 +1,6 @@
 import {
   Button,
+  CircularProgress,
   IconButton,
   Paper,
   Table,
@@ -14,19 +15,71 @@ import {
 import React, { useMemo } from 'react';
 import { CopyIcon, DeleteIcon } from '../../../icons';
 import { useShortUrl } from '../../../short-url/ShortUrlContext';
+import { useAuth } from '../../../auth/AuthContext';
+import { toast } from 'react-toastify';
+
+interface RowData {
+  id: string;
+  shortLink: string;
+  originalLink: string;
+  clicks: number;
+  date: Date;
+}
+
+interface CreateData {
+  data: RowData;
+  handleCopy: (url: string) => void;
+  handleDelete: (id: string) => void;
+}
+
+const createData = ({
+  data: { clicks, date, id, originalLink, shortLink },
+  handleCopy,
+  handleDelete,
+}: CreateData) => {
+  return {
+    id,
+    shortLink: (
+      <WithAdornment>
+        {shortLink}
+        <CopyIconWrapper onClick={() => handleCopy(shortLink)}>
+          <CopyIcon />
+        </CopyIconWrapper>
+      </WithAdornment>
+    ),
+    originalLink,
+    clicks,
+    date: date.toDateString(),
+    action: (
+      <StyledIconButton>
+        <DeleteIcon />
+      </StyledIconButton>
+    ),
+  };
+};
 
 const HistoryTable = () => {
   const { urlsList, urlListLoading } = useShortUrl();
+  const { authData } = useAuth();
+
+  const handleCopy = (url: string) => {
+    navigator.clipboard.writeText(url);
+    toast.info(`${url} was copied to clipboard`);
+  };
 
   const rows = useMemo(() => {
     return urlsList.map((item) =>
-      createData(
-        item._id,
-        item.shortUrl,
-        item.url,
-        item.clickCount,
-        item.expiresAt
-      )
+      createData({
+        data: {
+          id: item._id,
+          shortLink: item.shortUrl,
+          originalLink: item.url,
+          clicks: item.clickCount,
+          date: item.expiresAt,
+        },
+        handleCopy,
+        handleDelete: () => null,
+      })
     );
   }, [urlsList]);
 
@@ -55,17 +108,27 @@ const HistoryTable = () => {
             </StyledTableHeadRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableBodyRow key={row.id}>
-                <TableCell component="th" scope="row">
-                  {row.shortLink}
+            {urlListLoading ? (
+              <StyledTableBodyRow>
+                <TableCell colSpan={5}>
+                  <LoaderWrapper>
+                    <CircularProgress />
+                  </LoaderWrapper>
                 </TableCell>
-                <TableCell>{row.originalLink}</TableCell>
-                <TableCell>{row.clicks}</TableCell>
-                <TableCell>{row.date}</TableCell>
-                <TableCell align="right">{row.action}</TableCell>
               </StyledTableBodyRow>
-            ))}
+            ) : (
+              (authData.user ? rows : mockRows).map((row) => (
+                <StyledTableBodyRow key={row.id}>
+                  <TableCell component="th" scope="row">
+                    {row.shortLink}
+                  </TableCell>
+                  <TableCell>{row.originalLink}</TableCell>
+                  <TableCell>{row.clicks}</TableCell>
+                  <TableCell>{row.date}</TableCell>
+                  <TableCell align="right">{row.action}</TableCell>
+                </StyledTableBodyRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </TableContainer>
@@ -186,32 +249,68 @@ const StyledIconButton = styled(IconButton)({
   },
 });
 
-function createData(
-  id: string,
-  shortLink: string,
-  originalLink: string,
-  clicks: number,
-  date: Date
-) {
-  return {
-    id,
-    shortLink: (
-      <WithAdornment>
-        {shortLink}
-        <CopyIconWrapper>
-          <CopyIcon />
-        </CopyIconWrapper>
-      </WithAdornment>
-    ),
-    originalLink,
-    clicks,
-    date: date.toDateString(),
-    action: (
-      <StyledIconButton>
-        <DeleteIcon />
-      </StyledIconButton>
-    ),
-  };
-}
+const LoaderWrapper = styled('div')({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
+
+const mockRows = [
+  createData({
+    data: {
+      id: 'id-1',
+      shortLink: 'test1.com',
+      originalLink: 'original1.com',
+      clicks: 3,
+      date: new Date('2023-10-10'),
+    },
+    handleCopy: () => null,
+    handleDelete: () => null,
+  }),
+  createData({
+    data: {
+      id: 'id-2',
+      shortLink: 'test2.com',
+      originalLink: 'original2.com',
+      clicks: 1,
+      date: new Date('2023-10-10'),
+    },
+    handleCopy: () => null,
+    handleDelete: () => null,
+  }),
+  createData({
+    data: {
+      id: 'id-3',
+      shortLink: 'test3.com',
+      originalLink: 'original3.com',
+      clicks: 4,
+      date: new Date('2023-10-10'),
+    },
+    handleCopy: () => null,
+    handleDelete: () => null,
+  }),
+  createData({
+    data: {
+      id: 'id-4',
+      shortLink: 'test4.com',
+      originalLink: 'original4.com',
+      clicks: 8,
+      date: new Date('2023-10-10'),
+    },
+    handleCopy: () => null,
+    handleDelete: () => null,
+  }),
+  createData({
+    data: {
+      id: 'id-5',
+      shortLink: 'test5.com',
+      originalLink: 'original5.com',
+      clicks: 35,
+      date: new Date('2023-10-10'),
+    },
+    handleCopy: () => null,
+    handleDelete: () => null,
+  }),
+];
 
 export default HistoryTable;

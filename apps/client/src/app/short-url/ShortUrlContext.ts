@@ -6,6 +6,7 @@ export interface IShortUrlContext {
   urlListLoading: boolean;
   getUrlsList: (page: number, status?: ShortUrlStatus) => Promise<void>;
   createPrivateUrl: (url: string) => Promise<void>;
+  newPrivateUrlLoading: boolean;
 }
 
 export const ShortUrlContext = createContext<IShortUrlContext>({
@@ -13,6 +14,7 @@ export const ShortUrlContext = createContext<IShortUrlContext>({
   urlListLoading: false,
   getUrlsList: () => null,
   createPrivateUrl: () => null,
+  newPrivateUrlLoading: false,
 });
 
 export const useShortUrl = () => {
