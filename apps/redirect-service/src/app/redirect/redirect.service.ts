@@ -19,7 +19,7 @@ export class RedirectService {
 
     if (!shortUrl) {
       // redirect to 404
-      return res.redirect(301, this.configService.get('REDIRECT_404_URL'));
+      return res.redirect(302, this.configService.get('REDIRECT_404_URL'));
     }
 
     res.redirect(301, shortUrl.url);
