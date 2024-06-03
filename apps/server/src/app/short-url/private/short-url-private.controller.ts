@@ -35,11 +35,11 @@ export class ShortUrlPrivateController {
   async getShortUrlList(
     @GetTokenPayload() tokenPayload: AuthTokenPayload,
     @Query('status') status: ShortUrlStatus,
-    @Query('page') page: string
+    @Query('idLast') idLast: string
   ): Promise<FullShortUrl[]> {
     return this.shortUrlPrivateService.getShortUrlList(
       tokenPayload,
-      +page,
+      idLast,
       status
     );
   }

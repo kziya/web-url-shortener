@@ -28,7 +28,7 @@ export class ShortUrlPrivateRepository {
 
   async getShortUrlList(
     idUser: string,
-    page: number,
+    idLast: string,
     status?: ShortUrlStatus
   ): Promise<ShortUrlDocument[]> {
     const limit = 20;
@@ -37,13 +37,15 @@ export class ShortUrlPrivateRepository {
         ? { expiresAt: { $lte: new Date() } }
         : { status }
       : {};
+    const idLastFilter = idLast ? { _id: { $lt: idLast } } : {};
 
     return this.shortUrlModel
       .find({
         idUser,
         ...statusFilter,
+        ...idLastFilter,
       })
-      .skip(limit * (page - 1))
+      .sort({ _id: -1 })
       .limit(limit);
   }
 

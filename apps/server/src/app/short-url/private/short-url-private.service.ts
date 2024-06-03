@@ -39,12 +39,12 @@ export class ShortUrlPrivateService {
 
   async getShortUrlList(
     tokenPayload: AuthTokenPayload,
-    page: number,
+    idLast: string,
     status: ShortUrlStatus
   ): Promise<FullShortUrl[]> {
     const shortUrls = await this.shortUrlRepository.getShortUrlList(
       tokenPayload.id,
-      page,
+      idLast,
       status
     );
 
