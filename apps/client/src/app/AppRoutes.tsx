@@ -46,7 +46,23 @@ export function AppRoutes() {
         element={<ResetPasswordByUid />}
       />
 
-      <Route path="/" element={<PrivateMain />} />
+      <Route
+        path="/main"
+        element={
+          <AuthGuard>
+            <PrivateMain />
+          </AuthGuard>
+        }
+      />
+
+      <Route
+        path="/"
+        element={
+          <NotAuthGuard>
+            <PrivateMain />
+          </NotAuthGuard>
+        }
+      />
 
       <Route
         path="/settings"

@@ -26,11 +26,16 @@ const OuterWrapper = styled('main')({
   overflow: 'hidden',
 });
 
-const InnerWrapper = styled('div')({
+const InnerWrapper = styled('div')(({ theme }) => ({
   padding: '36px 31px 45px',
   display: 'flex',
   flexDirection: 'column',
   rowGap: '92px',
-});
+
+  [theme.breakpoints.down('sm')]: {
+    rowGap: '60px',
+    padding: '36px 10px',
+  },
+}));
 
 export default MainLayout;
