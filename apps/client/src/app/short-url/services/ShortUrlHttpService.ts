@@ -4,7 +4,7 @@ import { AxiosResponse } from 'axios';
 
 class ShortUrlHttpService {
   async getUrlsList(
-    idLast: string,
+    page: number,
     status?: ShortUrlStatus
   ): Promise<FullShortUrl[]> {
     const response = await axiosInstance.get<FullShortUrl[]>(
@@ -12,7 +12,7 @@ class ShortUrlHttpService {
       {
         params: {
           status,
-          idLast,
+          page,
         },
       }
     );

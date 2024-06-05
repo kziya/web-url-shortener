@@ -15,22 +15,18 @@ export const ShortUrlProvider: React.FC<{ children: React.ReactNode }> = ({
   );
   const [urlListLoading, setUrlListLoading] = useState<boolean>(false);
   const [newPrivateUrlLoading, setNewPrivateLinkLoading] = useState(false);
-  const [hasMoreUrls, setHasMoreUrls] = useState<boolean>(true);
 
-  const getUrlsList = async (idLast: string, status?: ShortUrlStatus) => {
+  const getUrlsList = async (page: number, status?: ShortUrlStatus) => {
     try {
       setUrlListLoading(true);
-      const urlsList = await ShortUrlService.getUrlsList(idLast, status);
-      if (!urlsList.length) {
-        setHasMoreUrls(false);
-      }
+      const urlsList = await ShortUrlService.getUrlsList(page, status);
       setUrlListLoading(false);
-      const newList = urlsList.map((item) => ({
-        ...item,
-        expiresAt: new Date(item.expiresAt),
-      }));
-
-      setUrlsList((list) => [...list, ...newList]);
+      setUrlsList(
+        urlsList.map((item) => ({
+          ...item,
+          expiresAt: new Date(item.expiresAt),
+        }))
+      );
     } catch (error) {
       toast.error(
         'Error occured while getting urls list. Try to reload the page!'
@@ -93,7 +89,7 @@ export const ShortUrlProvider: React.FC<{ children: React.ReactNode }> = ({
         )
       );
       setUrlListLoading(false);
-      toast.success('The url was successfully updated');
+      toast.success("The url was successfully updated")
     } catch (error) {
       toast.error('Error occured while renewing url. Try again later!');
       setUrlListLoading(false);
@@ -111,7 +107,6 @@ export const ShortUrlProvider: React.FC<{ children: React.ReactNode }> = ({
         deleteUrl,
         renewPrivateUrl,
         createPublicUrl,
-        hasMoreUrls,
       }}
     >
       {children}
