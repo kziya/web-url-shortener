@@ -135,6 +135,7 @@ const HistoryTable = () => {
   const handleInView = () => {
     if (!hasMoreUrls) return;
     const lastId = urlsList[urlsList.length - 1]._id;
+    if (!authData?.user) return;
     getUrlsList(lastId, 'active' as ShortUrlStatus);
   };
 
