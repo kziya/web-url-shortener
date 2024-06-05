@@ -11,6 +11,7 @@ export interface IShortUrlContext {
   deleteUrl: (id: string) => Promise<void>;
   renewPrivateUrl: (id: string) => Promise<void>;
   hasMoreUrls: boolean;
+  newUrlsLoading: boolean;
 }
 
 export const ShortUrlContext = createContext<IShortUrlContext>({
@@ -23,6 +24,7 @@ export const ShortUrlContext = createContext<IShortUrlContext>({
   deleteUrl: () => null,
   renewPrivateUrl: () => null,
   hasMoreUrls: true,
+  newUrlsLoading: false,
 });
 
 export const useShortUrl = () => {

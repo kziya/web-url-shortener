@@ -74,6 +74,7 @@ const HistoryTable = () => {
     renewPrivateUrl,
     hasMoreUrls,
     getUrlsList,
+    newUrlsLoading,
   } = useShortUrl();
   const { authData } = useAuth();
 
@@ -162,7 +163,15 @@ const HistoryTable = () => {
             </StyledTableHeadRow>
           </TableHead>
           <TableBody>
-            {rows.length ? (
+            {urlListLoading ? (
+              <StyledTableBodyRow>
+                <TableCell colSpan={5}>
+                  <LoaderWrapper>
+                    <CircularProgress />
+                  </LoaderWrapper>
+                </TableCell>
+              </StyledTableBodyRow>
+            ) : rows.length ? (
               <>
                 {rows.map((row, index) => (
                   <StyledTableBodyRow key={row.id}>
@@ -192,7 +201,7 @@ const HistoryTable = () => {
                 </TableCell>
               </StyledTableBodyRow>
             )}
-            {urlListLoading && (
+            {newUrlsLoading && (
               <StyledTableBodyRow>
                 <TableCell colSpan={5}>
                   <LoaderWrapper>
@@ -230,8 +239,8 @@ const HistoryText = styled(Typography)({
 const StyledPaper = styled(Paper)({
   background: 'transparent',
   boxShadow: 'none',
-  overflowY: "auto",
-  maxHeight: "500px",
+  overflowY: 'auto',
+  maxHeight: '500px',
 
   '& .MuiTableCell-root': {
     border: 'none',

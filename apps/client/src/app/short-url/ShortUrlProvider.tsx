@@ -16,16 +16,25 @@ export const ShortUrlProvider: React.FC<{ children: React.ReactNode }> = ({
   const [urlListLoading, setUrlListLoading] = useState<boolean>(false);
   const [newPrivateUrlLoading, setNewPrivateLinkLoading] = useState(false);
   const [hasMoreUrls, setHasMoreUrls] = useState<boolean>(true);
+  const [newUrlsLoading, setNewUrlsLoading] = useState<boolean>(false);
 
   const getUrlsList = async (idLast: string, status?: ShortUrlStatus) => {
     try {
-      setUrlListLoading(true);
-      const urlsList = await ShortUrlService.getUrlsList(idLast, status);
-      if (!urlsList.length) {
+      if (urlsList.length) {
+        setNewUrlsLoading(true);
+      } else {
+        setUrlListLoading(true);
+      }
+      const urlsListResponse = await ShortUrlService.getUrlsList(
+        idLast,
+        status
+      );
+      if (!urlsListResponse.length) {
         setHasMoreUrls(false);
       }
       setUrlListLoading(false);
-      const newList = urlsList.map((item) => ({
+      setNewUrlsLoading(false);
+      const newList = urlsListResponse.map((item) => ({
         ...item,
         expiresAt: new Date(item.expiresAt),
       }));
@@ -36,6 +45,7 @@ export const ShortUrlProvider: React.FC<{ children: React.ReactNode }> = ({
         'Error occured while getting urls list. Try to reload the page!'
       );
       setUrlListLoading(false);
+      setNewUrlsLoading(false);
     }
   };
 
@@ -112,6 +122,7 @@ export const ShortUrlProvider: React.FC<{ children: React.ReactNode }> = ({
         renewPrivateUrl,
         createPublicUrl,
         hasMoreUrls,
+        newUrlsLoading,
       }}
     >
       {children}
