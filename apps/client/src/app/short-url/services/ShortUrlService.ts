@@ -3,12 +3,12 @@ import ShortUrlHttpService from './ShortUrlHttpService';
 
 class ShortUrlService {
   async getUrlsList(
-    page: number,
+    idLast: string,
     status?: ShortUrlStatus
   ): Promise<FullShortUrl[]> {
-    const authData = await ShortUrlHttpService.getUrlsList(page, status);
+    const authData = await ShortUrlHttpService.getUrlsList(idLast, status);
 
-    return authData.reverse();
+    return authData;
   }
 
   async createPrivateUrl(url: string): Promise<FullShortUrl> {
