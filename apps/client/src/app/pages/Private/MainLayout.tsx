@@ -8,7 +8,7 @@ interface Props {
 
 const MainLayout = ({ children }: Props) => {
   return (
-    <OuterWrapper>
+    <OuterWrapper style={{ backgroundImage: 'assets/main-background.jpg' }}>
       <InnerWrapper>
         <MainNavigation />
         {children}
@@ -19,7 +19,8 @@ const MainLayout = ({ children }: Props) => {
 
 const OuterWrapper = styled('main')({
   minHeight: '100%',
-  backgroundImage: "url('assets/main-background.jpg')",
+  background:
+    'linear-gradient(90deg, rgba(102,0,0,1) 0%, rgba(1,8,124,1) 52%, rgba(0,212,255,1) 100%)',
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
