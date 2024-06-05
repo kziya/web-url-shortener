@@ -163,26 +163,26 @@ const HistoryTable = () => {
           </TableHead>
           <TableBody>
             {rows.length ? (
-              rows.map((row, index) => (
-                <StyledTableBodyRow
-                  key={row.id}
-                  ref={index === rows.length - 1 ? ref : undefined}
-                >
-                  <TableCell component="th" scope="row">
-                    {row.shortLink}
-                  </TableCell>
-                  <TableCell>{row.originalLink}</TableCell>
-                  <TableCell style={{ minWidth: '115px' }}>
-                    {row.clicks === undefined ? 'not available' : row.clicks}
-                  </TableCell>
-                  <TableCell style={{ minWidth: '140px' }}>
-                    {row.date}
-                  </TableCell>
-                  <TableCell align="right" style={{ minWidth: '110px' }}>
-                    {authData?.user ? row.action : 'not available'}
-                  </TableCell>
-                </StyledTableBodyRow>
-              ))
+              <>
+                {rows.map((row, index) => (
+                  <StyledTableBodyRow key={row.id}>
+                    <TableCell component="th" scope="row">
+                      {row.shortLink}
+                    </TableCell>
+                    <TableCell>{row.originalLink}</TableCell>
+                    <TableCell style={{ minWidth: '115px' }}>
+                      {row.clicks === undefined ? 'not available' : row.clicks}
+                    </TableCell>
+                    <TableCell style={{ minWidth: '140px' }}>
+                      {row.date}
+                    </TableCell>
+                    <TableCell align="right" style={{ minWidth: '110px' }}>
+                      {authData?.user ? row.action : 'not available'}
+                    </TableCell>
+                  </StyledTableBodyRow>
+                ))}
+                <span ref={ref} />
+              </>
             ) : (
               <StyledTableBodyRow>
                 <TableCell colSpan={5}>
@@ -230,6 +230,8 @@ const HistoryText = styled(Typography)({
 const StyledPaper = styled(Paper)({
   background: 'transparent',
   boxShadow: 'none',
+  overflowY: "auto",
+  maxHeight: "500px",
 
   '& .MuiTableCell-root': {
     border: 'none',
