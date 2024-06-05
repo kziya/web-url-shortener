@@ -168,7 +168,7 @@ const mockUrls: FullShortUrl[] = [
     clickCount: 20,
     status: 'active' as any,
     expiresAt: new Date('2025-06-30T23:59:59.999Z'),
-    _id: '987jkl',
+    _id: '',
     shortUrl: 'http://short4.com',
   },
 ];
