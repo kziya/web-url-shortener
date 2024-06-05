@@ -1,5 +1,4 @@
 import {
-  Button,
   CircularProgress,
   IconButton,
   Paper,
@@ -17,6 +16,8 @@ import { CopyIcon, DeleteIcon, RefreshIcon } from '../../../icons';
 import { useShortUrl } from '../../../short-url/ShortUrlContext';
 import { useAuth } from '../../../auth/AuthContext';
 import { toast } from 'react-toastify';
+import { ShortUrlStatus } from '@web-url-shortener/domain';
+import { useInView } from 'react-intersection-observer';
 
 interface RowData {
   id: string;
@@ -66,11 +67,22 @@ const createData = ({
 };
 
 const HistoryTable = () => {
-  const { urlsList, urlListLoading, deleteUrl, renewPrivateUrl } =
-    useShortUrl();
+  const {
+    urlsList,
+    urlListLoading,
+    deleteUrl,
+    renewPrivateUrl,
+    hasMoreUrls,
+    getUrlsList,
+    newUrlsLoading,
+  } = useShortUrl();
   const { authData } = useAuth();
 
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  const { ref, inView } = useInView({
+    threshold: 0.1,
+  });
 
   const updateWidth = () => {
     setScreenWidth(window.innerWidth);
@@ -107,7 +119,24 @@ const HistoryTable = () => {
         handleRenew: renewPrivateUrl,
       })
     );
-  }, [urlsList, screenWidth]);
+  }, [urlsList, screenWidth, authData?.user, deleteUrl, renewPrivateUrl]);
+
+  useEffect(() => {
+    if (!authData?.user) return;
+    getUrlsList('', 'active' as ShortUrlStatus);
+  }, []);
+
+  useEffect(() => {
+    if (inView) {
+      handleInView();
+    }
+  }, [inView]);
+
+  const handleInView = () => {
+    if (!hasMoreUrls) return;
+    const lastId = urlsList[urlsList.length - 1]._id;
+    getUrlsList(lastId, 'active' as ShortUrlStatus);
+  };
 
   return (
     <OuterWrapper>
@@ -143,28 +172,40 @@ const HistoryTable = () => {
                 </TableCell>
               </StyledTableBodyRow>
             ) : rows.length ? (
-              rows.map((row) => (
-                <StyledTableBodyRow key={row.id}>
-                  <TableCell component="th" scope="row">
-                    {row.shortLink}
-                  </TableCell>
-                  <TableCell>{row.originalLink}</TableCell>
-                  <TableCell style={{ minWidth: '115px' }}>
-                    {row.clicks === undefined ? 'not available' : row.clicks}
-                  </TableCell>
-                  <TableCell style={{ minWidth: '140px' }}>
-                    {row.date}
-                  </TableCell>
-                  <TableCell align="right" style={{ minWidth: '110px' }}>
-                    {authData?.user ? row.action : 'not available'}
-                  </TableCell>
-                </StyledTableBodyRow>
-              ))
+              <>
+                {rows.map((row, index) => (
+                  <StyledTableBodyRow key={row.id}>
+                    <TableCell component="th" scope="row">
+                      {row.shortLink}
+                    </TableCell>
+                    <TableCell>{row.originalLink}</TableCell>
+                    <TableCell style={{ minWidth: '115px' }}>
+                      {row.clicks === undefined ? 'not available' : row.clicks}
+                    </TableCell>
+                    <TableCell style={{ minWidth: '140px' }}>
+                      {row.date}
+                    </TableCell>
+                    <TableCell align="right" style={{ minWidth: '110px' }}>
+                      {authData?.user ? row.action : 'not available'}
+                    </TableCell>
+                  </StyledTableBodyRow>
+                ))}
+                <span ref={ref} />
+              </>
             ) : (
               <StyledTableBodyRow>
                 <TableCell colSpan={5}>
                   <LoaderWrapper>
                     Click "Shorten now!" to add your first url
+                  </LoaderWrapper>
+                </TableCell>
+              </StyledTableBodyRow>
+            )}
+            {newUrlsLoading && (
+              <StyledTableBodyRow>
+                <TableCell colSpan={5}>
+                  <LoaderWrapper>
+                    <CircularProgress />
                   </LoaderWrapper>
                 </TableCell>
               </StyledTableBodyRow>
@@ -195,41 +236,11 @@ const HistoryText = styled(Typography)({
   color: '#C9CED6',
 });
 
-const ActionsWrapper = styled('div')({
-  display: 'flex',
-  alignItems: 'center',
-  columnGap: '15px',
-});
-
-const ActionButton = styled(Button)({
-  background: '#181E29',
-  boxShadow: '0px 4px 10px 0px #0000001A',
-  height: '44px',
-  border: '1px solid #353C4A',
-  borderRadius: '48px',
-  textTransform: 'none',
-  fontWeight: 700,
-  fontSize: '15px',
-  lineHeight: '15px',
-  color: '#C9CED6',
-  padding: '0 25px',
-  display: 'flex',
-  alignItems: 'center',
-
-  '&:hover': {
-    background: '#181E29',
-    boxShadow: '0px 4px 10px 0px #0000001A',
-  },
-
-  '& svg': {
-    height: '15px',
-    marginBottom: '3px',
-  },
-});
-
 const StyledPaper = styled(Paper)({
   background: 'transparent',
   boxShadow: 'none',
+  overflowY: 'auto',
+  maxHeight: '500px',
 
   '& .MuiTableCell-root': {
     border: 'none',
@@ -244,14 +255,21 @@ const StyledPaper = styled(Paper)({
   },
 
   '&::-webkit-scrollbar': {
-    height: '8px',
+    height: '10px',
+    background: 'transparent',
   },
+
   '&::-webkit-scrollbar-thumb': {
     backgroundColor: '#0D1117',
     borderRadius: '4px',
+    backgroundClip: 'padding-box',
+    border: '3px solid transparent',
   },
   '&::-webkit-scrollbar-thumb:hover': {
     backgroundColor: '#555',
+  },
+  '&::-webkit-scrollbar-corner': {
+    backgroundColor: 'transparent',
   },
 });
 
@@ -311,68 +329,5 @@ const LoaderWrapper = styled('div')({
   alignItems: 'center',
   justifyContent: 'center',
 });
-
-const mockRows = [
-  createData({
-    data: {
-      id: 'id-1',
-      shortLink: 'test1.com',
-      originalLink: 'original1.com',
-      clicks: 3,
-      date: new Date('2023-10-10'),
-    },
-    handleCopy: () => null,
-    handleDelete: () => null,
-    handleRenew: () => null,
-  }),
-  createData({
-    data: {
-      id: 'id-2',
-      shortLink: 'test2.com',
-      originalLink: 'original2.com',
-      clicks: 1,
-      date: new Date('2023-10-10'),
-    },
-    handleCopy: () => null,
-    handleDelete: () => null,
-    handleRenew: () => null,
-  }),
-  createData({
-    data: {
-      id: 'id-3',
-      shortLink: 'test3.com',
-      originalLink: 'original3.com',
-      clicks: 4,
-      date: new Date('2023-10-10'),
-    },
-    handleCopy: () => null,
-    handleDelete: () => null,
-    handleRenew: () => null,
-  }),
-  createData({
-    data: {
-      id: 'id-4',
-      shortLink: 'test4.com',
-      originalLink: 'original4.com',
-      clicks: 8,
-      date: new Date('2023-10-10'),
-    },
-    handleCopy: () => null,
-    handleDelete: () => null,
-    handleRenew: () => null,
-  }),
-  createData({
-    data: {
-      id: 'id-5',
-      shortLink: 'test5.com',
-      originalLink: 'original5.com',
-      clicks: 35,
-      date: new Date('2023-10-10'),
-    },
-    handleCopy: () => null,
-    handleDelete: () => null,
-    handleRenew: () => null,
-  }),
-];
 
 export default HistoryTable;

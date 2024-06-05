@@ -15,23 +15,37 @@ export const ShortUrlProvider: React.FC<{ children: React.ReactNode }> = ({
   );
   const [urlListLoading, setUrlListLoading] = useState<boolean>(false);
   const [newPrivateUrlLoading, setNewPrivateLinkLoading] = useState(false);
+  const [hasMoreUrls, setHasMoreUrls] = useState<boolean>(true);
+  const [newUrlsLoading, setNewUrlsLoading] = useState<boolean>(false);
 
-  const getUrlsList = async (page: number, status?: ShortUrlStatus) => {
+  const getUrlsList = async (idLast: string, status?: ShortUrlStatus) => {
     try {
-      setUrlListLoading(true);
-      const urlsList = await ShortUrlService.getUrlsList(page, status);
-      setUrlListLoading(false);
-      setUrlsList(
-        urlsList.map((item) => ({
-          ...item,
-          expiresAt: new Date(item.expiresAt),
-        }))
+      if (urlsList.length) {
+        setNewUrlsLoading(true);
+      } else {
+        setUrlListLoading(true);
+      }
+      const urlsListResponse = await ShortUrlService.getUrlsList(
+        idLast,
+        status
       );
+      if (!urlsListResponse.length) {
+        setHasMoreUrls(false);
+      }
+      setUrlListLoading(false);
+      setNewUrlsLoading(false);
+      const newList = urlsListResponse.map((item) => ({
+        ...item,
+        expiresAt: new Date(item.expiresAt),
+      }));
+
+      setUrlsList((list) => [...list, ...newList]);
     } catch (error) {
       toast.error(
         'Error occured while getting urls list. Try to reload the page!'
       );
       setUrlListLoading(false);
+      setNewUrlsLoading(false);
     }
   };
 
@@ -89,7 +103,7 @@ export const ShortUrlProvider: React.FC<{ children: React.ReactNode }> = ({
         )
       );
       setUrlListLoading(false);
-      toast.success("The url was successfully updated")
+      toast.success('The url was successfully updated');
     } catch (error) {
       toast.error('Error occured while renewing url. Try again later!');
       setUrlListLoading(false);
@@ -107,6 +121,8 @@ export const ShortUrlProvider: React.FC<{ children: React.ReactNode }> = ({
         deleteUrl,
         renewPrivateUrl,
         createPublicUrl,
+        hasMoreUrls,
+        newUrlsLoading,
       }}
     >
       {children}

@@ -4,12 +4,14 @@ import { createContext, useContext } from 'react';
 export interface IShortUrlContext {
   urlsList: FullShortUrl[];
   urlListLoading: boolean;
-  getUrlsList: (page: number, status?: ShortUrlStatus) => Promise<void>;
+  getUrlsList: (idLast: string, status?: ShortUrlStatus) => Promise<void>;
   createPrivateUrl: (url: string) => Promise<void>;
   createPublicUrl: (url: string) => Promise<void>;
   newPrivateUrlLoading: boolean;
   deleteUrl: (id: string) => Promise<void>;
   renewPrivateUrl: (id: string) => Promise<void>;
+  hasMoreUrls: boolean;
+  newUrlsLoading: boolean;
 }
 
 export const ShortUrlContext = createContext<IShortUrlContext>({
@@ -21,6 +23,8 @@ export const ShortUrlContext = createContext<IShortUrlContext>({
   newPrivateUrlLoading: false,
   deleteUrl: () => null,
   renewPrivateUrl: () => null,
+  hasMoreUrls: true,
+  newUrlsLoading: false,
 });
 
 export const useShortUrl = () => {
