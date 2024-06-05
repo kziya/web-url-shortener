@@ -20,7 +20,7 @@ const MainLayout = ({ children }: Props) => {
 const OuterWrapper = styled('main')({
   minHeight: '100%',
   background:
-    'linear-gradient(90deg, rgba(102,0,0,1) 0%, rgba(1,8,124,1) 52%, rgba(0,212,255,1) 100%)',
+    'linear-gradient(270deg, rgba(102,0,0,1) 0%, rgba(1,8,124,1) 80%, rgba(0,7,131,1) 100%)',
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
